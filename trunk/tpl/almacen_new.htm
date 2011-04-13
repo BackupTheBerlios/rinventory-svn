@@ -1,0 +1,167 @@
+<style>
+.st_tbcss,.st_tdcss,.st_divcss,.st_ftcss{border:none;padding:0px;margin:0px}
+A.st_acss,A.st_acss:link,A.st_acss:visited,A.st_acss:active,A.st_acss:hover{background-color:transparent;font-style:normal;border:none}
+</style><font id="st_gl0"></font><font id="st_gl1"></font><font id="st_gl2"></font><font id="st_gl3"></font><font id="st_gl4"></font><font id="st_gl5"></font><font id="st_gl6"></font><font id="st_gl7"></font><font id="st_gl8"></font><font id="st_gl9"></font>
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="menubar">
+  <tbody><tr>
+    <td>
+  <script id="Sothink Widgets:top_menu.inc.pgt" type="text/javascript" language="JavaScript1.2">
+  </script>
+    </td>
+    <td align="right"><strong><a href="http://localhost/trunk/std/index.php?option=logout">Salir</a></strong>&nbsp;&nbsp;&nbsp;</td>
+  </tr>
+</tbody></table>
+<!-- end top_menu.inc.htm -->
+	<!-- start toolbar.inc.htm -->
+
+
+<table class="menubar" border="0" cellpadding="0" cellspacing="0" width="100%">
+
+
+  <tbody>
+
+
+    <tr>
+
+
+      <td class="menudottedline" width="40%"><div class="pathway"><a href="http://localhost/trunk/std/index.php" class="headerNavigation">Panel de Control</a> » <a href="http://localhost/trunk/std/index.php?option=com_departamentos" class="headerNavigation">Almacen</a></div></td>
+
+
+      <td class="menudottedline" align="right"><table id="toolbar" border="0" cellpadding="0" cellspacing="0">
+
+
+          <tbody>
+
+
+            <tr align="center" valign="middle">
+
+
+			 <!-- start icons_toolbar_edit.inc.htm -->
+
+	<td><a class="toolbar" href="javascript:showMainMenu();if($F('name')==''){alert('Por favor ingrese el Nombre del Departamento');} else if ($F('contact_name')==''){alert('Por favor Ingrese el Nombre del Contacto');} else if ($F('phone')==''){alert('Ingrese el Número Telefónico');} else{ submitbutton('save');}" onClick=""> <img src="img/sweb/save_f2.png" alt="Activo" name="active" align="middle" border="0"> <br>
+  Guardar</a> </td>
+<td>&nbsp;</td>
+
+<td><a class="toolbar" href="javascript:if($F('name')==''){alert('Por favor ingrese el Nombre del Departamento');} else if ($F('contact_name')==''){alert('Por favor Ingrese el Nombre del Contacto');} else if ($F('phone')==''){alert('Ingrese el Número Telefónico');} else{ submitbutton('apply');}" onClick=""> <img src="img/sweb/apply_f2.png" alt="Inactivo" name="inactivate" align="middle" border="0"> <br>
+  Aplicar</a> </td> 
+<td>&nbsp;</td>
+
+<td><a class="toolbar" href="javascript:showMainMenu();cancelar('almacen_list');" onClick=""> <img src="img/sweb/cancel_f2.png" alt="Nuevo" name="new" align="middle" border="0"> <br>
+  Cancelar</a> </td>
+
+<td>&nbsp;</td>
+
+<!-- end icons_toolbar_edit.inc.htm -->
+
+
+
+<script>
+function cancelar(module)
+{
+    document.location='index.php?pages='+module;
+}
+</script>
+            </tr>
+
+
+          </tbody>
+
+
+        </table></td>
+
+
+    </tr>
+
+
+  </tbody>
+
+
+</table>
+
+
+<!-- end toolbar.inc.htm -->	<!-- start company.inc.htm -->
+
+<div class="centermain" align="center">
+  <div class="main">
+    <!-- start form_departamentos_edit.inc.htm -->
+<script language="Javascript" src="js/overlib_mini.js"></script>
+<link href="css/media.css" rel="stylesheet" type="text/css">
+<table class="adminheading">
+  <tbody>
+    <tr>
+      <th class="categories"><script language="javascript" type="text/javascript"> od_displayImage('logo_Departamentos', 'img/sweb/departamentos',48,48 ,'icon-png','Departamentos');</script><img src="img/sweb/departamentos.png" width="48" height="48" name="logo_Departamentos" border="0" class="icon-png" alt="Departamentos">
+        Almacen</th>
+    </tr>
+  </tbody>
+</table>
+<form action="index.php?pages=almacen" method="post" name="adminForm" enctype="multipart/form-data">
+  <table class="adminform">
+    <!--DWLayoutTable-->
+    <tbody>
+      <tr>
+        <th colspan="3">Detalles</th>
+      </tr>
+      <tr>
+        <td nowrap="nowrap" width="250"><div align="right">Nombre:</div></td>
+        <td><input name="name" type="text" class="text_area" id="name" value="" size="60"> <span class="obligatorio">*</span>       </td>
+		<td rowspan="8" valign="top"></td>
+      </tr>
+	  <tr>
+        <td nowrap="nowrap" width="250"><div align="right">Nombre de Contacto:</div></td>
+        <td><input name="contact_name" type="text" class="text_area" id="contact_name" value="" size="60">  <span class="obligatorio">*</span>      </td>
+      </tr>
+	  <tr>
+        <td nowrap="nowrap" width="250"><div align="right">Teléfono:</div></td>
+        <td><input name="phone" type="text" class="text_area" id="phone" value="" size="60">   <span class="obligatorio">*</span>     </td>
+      </tr>
+      <tr>
+        <td nowrap="nowrap" width="250"><div align="right">Activo:</div></td>
+        <td><input name="active" type="checkbox" id="active" value="1"></td>
+      </tr>
+      <tr>
+        <td nowrap="nowrap" width="250"><div align="right">Dirección:</div></td>
+        <td><input name="address" type="text" class="text_area" id="address" value="" size="60">        </td>
+      </tr>
+      <tr>
+        <td nowrap="nowrap" width="250"><div align="right">Fax:</div></td>
+        <td><input name="fax" type="text" class="text_area" id="fax" value="" size="60">        </td>
+      </tr>
+      <tr>
+        <td nowrap="nowrap" width="250"><div align="right">Sitio Web:</div></td>
+        <td><input name="website" type="text" class="text_area" id="website" value="" size="60">        </td>
+     </tr>
+      <tr>
+        <td nowrap="nowrap" width="250"><div align="right">E-Mail:</div></td>
+        <td><input name="email" type="text" class="text_area" id="email" value="" size="60"> </td>
+      </tr>
+      <tr>
+        <td width="250" valign="top" nowrap="nowrap"><div align="right">Imagen:</div></td>
+        <td colspan="2"><input name="upload" type="file" class="text_area" id="upload" size="60">
+          &nbsp;&nbsp;&nbsp;&nbsp;Tamaño Max : 10M</td>
+      </tr>
+      <tr>
+        <td width="250" rowspan="2" valign="top" nowrap="nowrap"><div align="right">Observaciones: </div></td>
+        <td width="445" height="1"></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td valign="top"><div class="htmlarea">
+            <textarea name="notes" cols="60" rows="7" class="text_area" id="Description"></textarea>
+          </div></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td colspan="3"><br>
+          <input name="option" value="com_departamentos" type="hidden">
+          <input name="section" value="" type="hidden">
+          <input name="task" value="" type="hidden">
+          <input name="id" type="hidden" id="id" value="">         
+          <input name="hidemainmenu" value="0" type="hidden"></td>
+      </tr>
+    </tbody>
+  </table>
+</form>
+<!-- end form_departamentos_edit.inc.htm -->
+
+  </div>
+</div>
