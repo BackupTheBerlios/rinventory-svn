@@ -6,6 +6,11 @@ class User{
 	public $level;
 	public $active;
 	public $email;
+	public $username;
+	public $password;
+	public $ci;
+	public $phone;
+	public $imagepath;
 	
 	/**
 	 * 
@@ -33,9 +38,24 @@ class User{
 	/**
 	 * 
 	 * Enter description here ...
-	 * @param unknown_type $action
+	 * @param unknown_type $storeid
 	 */
-	public function isAllowed($action){
+	public function add($storeid=0){
+		$db = Database::getInstance();
+
+		if (!$storeid)
+			$storeid = "NULL";
+			
+		$res = $db->query("INSERT INTO ". TBL_USER ." ".
+			"(name,ape,address,username,pwd,email,CI,active,hw_added,phone,link_departament,last_update,image)".
+			" VALUES ".
+			"('$this->firstname','$this->lastname','$this->address','$this->username','$this->password','$this->email','$this->ci','$this->active',NOW(),'$this->phone',$storeid,NOW(),'$this->imagepath')");
+		
+		if (!$res)
+			return false;
+		
+		$this->id = $db->lastID();
+		
 		return true;
 	}
 }

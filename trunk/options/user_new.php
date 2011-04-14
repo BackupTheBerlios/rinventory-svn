@@ -4,7 +4,7 @@ require 'inc/class.store.php';
 $stores = Store::getAllActive("name", "ASC");
 ?>
 <p class="form-title">Registro de Nuevo Usuario</p>
-<form action="process_form.php" method="post" name="adminForm" enctype="multipart/form-data">
+<form action="process_form.php" method="POST" enctype="multipart/form-data">
 	<table class="form">
 	<tbody>
 	<tr>
@@ -29,7 +29,7 @@ $stores = Store::getAllActive("name", "ASC");
 	</tr>	           
 	<tr>
 		<td class="label">C.I.:</td>
-		<td><input name="ci" type="text" id="ci" value="" size="25"> <span class="mandatory">*</span></td>
+		<td><input name="ci" type="text" value="" size="25"> <span class="mandatory">*</span></td>
 	</tr>
 	<tr>
 		<td class="label">Activo:</td>
@@ -38,16 +38,10 @@ $stores = Store::getAllActive("name", "ASC");
 	<tr>
 		<td class="label">Tipo de Usuario:</td>
 		<td>
-			<select name="roll" id="roll">
+			<select name="role">
 			<option value=""></option>
-			<option value="consulta">Consulta</option>
-			<option value="Aux.de Almacen">Aux. de Almacen</option>
-			<option value="almacenista">Almacenista</option>
-			<option value="compras">Compras</option>
-			<option value="recursos humanos">Recursos Humanos</option>
-			<option value="coordinador">Coordinador</option>
-			<option value="residente">Administrador</option>
-			<option value="superadmin">SuperAdmin</option>
+			<option value="<?php echo USER_LEVEL;?>consulta">Consulta</option>
+			<option value="<?php echo ADMIN_LEVEL;?>">Aux. de Almacen</option>
 			</select>
 		</td>
 	</tr>                  
@@ -62,7 +56,7 @@ $stores = Store::getAllActive("name", "ASC");
 	<tr>
 		<td class="label">Departamento:</td>
 		<td>
-			<select name="company" id="company">
+			<select name="store">
 			<option value="">&nbsp;</option>
 			<?php
 			foreach($stores as $row){
@@ -74,11 +68,11 @@ $stores = Store::getAllActive("name", "ASC");
 	</tr>
 	<tr>
 		<td class="label">E-Mail:</td>
-		<td><input name="email" type="text" id="email" value="" size="60"/></td>
+		<td><input name="email" type="text" value="" size="60"/></td>
 	</tr>
 	<tr>
 		<td class="label">Imagen:</td>
-		<td colspan="2"><input name="upload" type="file" id="upload" size="60">&nbsp;&nbsp;&nbsp;&nbsp;Tama&ntilde;o Max : 2M</td>
+		<td colspan="2"><input name="upload" type="file" id="upload" size="60"/> &nbsp;Tama&ntilde;o Max : 2M</td>
 	</tr>
 	</tbody>
 	</table>
@@ -93,6 +87,7 @@ jQuery(document).ready(function(){
 		icons:{primary: 'ui-icon-disk'}
 	}).click(function(){
 		var error = checkData(); 
+
 		if (error){
 			jQuery('#dialog_error .error-list').html('<span class="ui-icon ui-icon-alert"></span>' + error);
 			jQuery('#dialog_error').dialog('open');
@@ -121,7 +116,10 @@ function checkData(){
 		error += '<li>Debe introducir Usuario</li>';
 
 	if (!jQuery('input[name="passwd"]').val())
-		error += '<li>Debe introducir Contrase&ntilde;</li>';
+		error += '<li>Debe introducir Contrase&ntilde;a</li>';
+
+	if (!jQuery('input[name="ci"]').val())
+		error += '<li>Debe introducir CI</li>';
 
 	if (jQuery('input[name="passwd"]').val() != jQuery('input[name="passwd2"]').val())
 		error += '<li>Contrase&ntilde;s no coinciden</li>';
