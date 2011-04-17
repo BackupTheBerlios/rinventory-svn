@@ -4,11 +4,11 @@ if (!isset($_POST["source"]))
 
 switch ($_POST["source"]){
 	case "purchase_new":
-		require 'inc/purchase.php';
+		require 'inc/process/purchase.php';
 		purchaseAdd();
 		break;
 	case "user_new":
-		require 'inc/user.php';
+		require 'inc/process/user.php';
 		userAdd();
 		break;
 }

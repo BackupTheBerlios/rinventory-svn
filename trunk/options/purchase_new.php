@@ -1,4 +1,4 @@
-<p class="form-title">Registro de nueva compra</p><form method="POST" name="form1" action="process_form.php">	<input type="hidden" value="purchase_new" name="source"/> 	<table class="form">	<tr>
+<p class="form-title">Registro de nueva compra</p><form method="POST" name="form1" action="">	<input type="hidden" value="purchase_new" name="page"/> 	<table class="form">	<tr>
 		<td class="label">C&oacute;digo:</td>
 		<td><input type="text" size="16" name="code" /></td>
 	</tr>
@@ -61,7 +61,7 @@
 Usted esta a punto de registrar una compra.<br/>
 &iquest;Est&aacute; seguro de realizar esta compra?
 </div>
-<div id="dialog_error"><div class="error-list ui-state-error"></div></div>
+<div id="dialog_error"><div class="error-list"></div></div>
 <script type="text/javascript">
 jQuery(document).ready(function(){
 	setupInputDecimalByObj(jQuery('input[name="prepayment"]'));

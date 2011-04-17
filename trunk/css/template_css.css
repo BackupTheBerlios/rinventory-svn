@@ -11,10 +11,9 @@ p.form-title{font-size:1.4em;font-weight:bold;text-transform:capitalize;margin-b
 
 table.default{border:solid 1px #CCC}
 table.default thead tr{background:url(ui-lightness/images/ui-bg_highlight-soft_100_eeeeee_1x100.png) 0 -60px repeat-x}
-table.default tbody tr,table.default thead tr{border-bottom:solid 1px #CCC}
 table.default tr.alternate{background-color:#FBFBFB}
 table.default th{text-align:center;font-weight:bold;padding:.2em 0}
-table.default td{padding:.2em}
+table.default td{padding:.2em .25em;border:1px solid #CCC}
 table.default .number{text-align:right}
 table.default .date{text-align:center}
 table.default .total{border-top:double;font-weight:bold}

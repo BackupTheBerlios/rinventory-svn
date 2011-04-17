@@ -142,9 +142,9 @@ class Purchase{
 			$sortSql = " ORDER BY $sortField ".$sortOrder;
 		
 		$sqlPaid = "SELECT pp.purchaseid, SUM(pp.amount) paid FROM ".TBL_PURCHASE_PAYMENT." pp GROUP BY pp.purchaseid";
-		$sql = "SELECT p.id,p.code,p.amount,p.`date`,p.provider,p.gloss,(p.amount-ptp.paid) outstanding ".
-			"FROM ".TBL_PURCHASE." p INNER JOIN ($sqlPaid) ptp ".
-			"ON p.id=ptp.purchaseid WHERE p.amount>ptp.paid $sortSql";
+		$sql = "SELECT p.id,p.code,p.amount,p.`date`,p.provider,p.gloss,IF(ptp.paid IS NULL,p.amount,p.amount-ptp.paid) outstanding ".
+			"FROM ".TBL_PURCHASE." p LEFT JOIN ($sqlPaid) ptp ".
+			"ON p.id=ptp.purchaseid WHERE p.amount>ptp.paid OR (ptp.paid IS NULL AND p.amount>0) $sortSql";
 
 		$res = $db->query($sql);
 		$result = array();

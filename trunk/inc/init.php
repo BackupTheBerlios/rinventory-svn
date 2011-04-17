@@ -3,10 +3,10 @@
 define("DB_HOST", "localhost");
 define("DB_USER", "root");
 define("DB_PASS", "Tomorrow");
-define("DB_NAME", "Inventario");
+define("DB_NAME", "inventario");
 
 define('TABLE_PREFIX', 'dvd_');
-define('SITE_URL', 'http://localhost/Inventario/');
+define('SITE_URL', 'http://localhost/rinventory/');
 
 define('TBL_CUSTOMER', TABLE_PREFIX . 'cliente');
 define('TBL_COLOR', TABLE_PREFIX . 'color');

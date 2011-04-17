@@ -1,15 +1,11 @@
 <?php
 require_once 'inc/class.user.php';
+require_once 'inc/class.log.php';
 
 function userAdd(){
+	$log = Log::getInstance();
 	$user = new User();
 	$storeid = isset($_POST['store']) ? $_POST['store'] : 0;
-	$imagepath = "";
-	
-	if($_FILES['upload']['name']) {
-		$path = "img/user/" . $_FILES['upload']['name'];  
-		copy($_FILES['upload']['tmp_name'], $path); 
-	}
 	
 	$user->firstname = isset($_POST['firstname']) ? $_POST['firstname'] : "";
 	$user->lastname = isset($_POST['lastname']) ? $_POST['lastname'] : "";
@@ -21,9 +17,22 @@ function userAdd(){
 	$user->address = isset($_POST['address']) ? $_POST['address'] : "";
 	$user->phone = isset($_POST['phone']) ? $_POST['phone'] : "";
 	$user->email = isset($_POST['email']) ? $_POST['email'] : "";
-	$user->imagepath = $imagepath;
 	
-	if($user->add($storeid))
+	if($user->add($storeid)){
+		if($_FILES['upload']['name']) {
+			$imagepath = str_replace(basename($_SERVER['PHP_SELF']), '', $_SERVER['PHP_SELF'])."img/user/$$user->id.jpg";
 			
+			if(move_uploaded_file($_FILES['upload']['tmp_name'], $imagepath)){
+				$user->imagepath = $imagepath;
+				$user->update();
+			}
+			else
+				$log->addError("No fue posible subir imagen");
+		}
+		
+		header("Location: index.php?pages=user_detail&user=$user->id");
+	}
+	else
+		$_POST['error'] = "error"; 
 }
 ?>

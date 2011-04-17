@@ -2,6 +2,31 @@
 require_once 'inc/class.mysql.php';
 
 class Store{
+	public $id;
+	public $name;
+	public $phone;
+	
+	/**
+	 * 
+	 * @param unknown_type $storeid
+	 */
+	public function read($storeid) {
+		$db = Database::getInstance();
+		
+		$sql = "SELECT name,phone FROM ".TBL_DEPARTMENT." WHERE id=$storeid";
+		$res = $db->query($sql);
+		
+		if ($db->rows($res) != 1)
+			return false;
+		
+		$row = $db->getRow($res, 0); 
+		$this->id = $storeid;
+		$this->name = $row['name'];
+		$this->phone = $row['phone'];
+		
+		return true;
+	}
+	
 	/**
 	 * Returns an array with all active stores
 	 */
