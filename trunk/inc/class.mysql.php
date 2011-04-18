@@ -13,7 +13,7 @@ class Database{
    private $stmt; 
    private $array; 
  
-   static $_instance; 
+   private static $_instance; 
 
    /**
     * Private constructor to avoid multiple instances (singleton)

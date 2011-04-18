@@ -5,6 +5,11 @@ class Store{
 	public $id;
 	public $name;
 	public $phone;
+	public $fax;
+	public $contact;
+	public $email;
+	public $description;
+	public $active;
 	
 	/**
 	 * 
@@ -13,7 +18,8 @@ class Store{
 	public function read($storeid) {
 		$db = Database::getInstance();
 		
-		$sql = "SELECT name,phone FROM ".TBL_DEPARTMENT." WHERE id=$storeid";
+		$sql = "SELECT name,phone,fax,contact_name contact,active,email,description FROM ".TBL_DEPARTMENT." WHERE id=$storeid";
+		
 		$res = $db->query($sql);
 		
 		if ($db->rows($res) != 1)
@@ -23,6 +29,11 @@ class Store{
 		$this->id = $storeid;
 		$this->name = $row['name'];
 		$this->phone = $row['phone'];
+		$this->fax = $row['fax'];
+		$this->contact = $row['contact'];
+		$this->email = $row['email'];
+		$this->active = $row['active'];
+		$this->description = $row['description'];
 		
 		return true;
 	}

@@ -45,7 +45,11 @@ echo '<div id="doc3" class="yui-t7">';
 						<li><a href="index.php?pages=inventario_list">Listado</a></li>
 					</ul>
 				</li>
-				<li><a href="index.php?pages=almacen_list">Almacen</a></li>
+				<li><a href="#">Almacen</a>
+					<ul>
+					<li><a href="index.php?pages=store_list">Listado</a></li>
+					</ul>
+				</li>
 				<li><a href="index.php?pages=traspaso_new">Traspasos</a></li>
 				<?php if ($session->userlevel >= ADMIN_LEVEL) { ?>
 				<li><a href="#">Usuario</a>
@@ -55,8 +59,8 @@ echo '<div id="doc3" class="yui-t7">';
 					</ul>
 				</li>
 				<?php }?>
-				<li><a href="index.php?pages=cliente_list">Clientes</a></li>
-				<li><a href="index.php?pages=venta_new">Ventas</a></li>
+				<!-- <li><a href="index.php?pages=cliente_list">Clientes</a></li>
+				<li><a href="index.php?pages=venta_new">Ventas</a></li> -->
 				<li><a href="process_login.php">Salir</a></li>
 			</ul>
 		</div>
