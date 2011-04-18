@@ -39,7 +39,12 @@ echo '<div id="doc3" class="yui-t7">';
 						<li><a href="index.php?pages=purchase_payable">Por Pagar</a></li>
 					</ul>
 				</li>
-				<li><a href="index.php?pages=inventario_list">Inventario</a></li>
+				<li><a href="#">Inventario</a>
+					<ul>
+						<li><a href="index.php?pages=inventario_new">Nuevo Producto</a></li>
+						<li><a href="index.php?pages=inventario_list">Listado</a></li>
+					</ul>
+				</li>
 				<li><a href="index.php?pages=almacen_list">Almacen</a></li>
 				<li><a href="index.php?pages=traspaso_new">Traspasos</a></li>
 				<?php if ($session->userlevel >= ADMIN_LEVEL) { ?>

@@ -5,11 +5,19 @@ class Item{
 	public static function getAll($sortOrder, $sortField){
 		$db = Database::getInstance();
 		$sort = "";
+		$array = array();
 		
 		if ($sortOrder && $sortField)
 			$sort = "ORDER BY $sortField ".($sortOrder == "a" ? "ASC" : "DESC");
 		
-		return $db->query("SELECT id,link_type_item group_name,v_descr name,material FROM ".TBL_ITEM." $sort");
+		$sql = "SELECT id,link_type_item group_name,v_descr name,material FROM ".TBL_ITEM." $sort";
+		$res = $db->query($sql);
+		
+		while($row = $db->getRow($res, 0)){
+			$array[] = $row;	
+		}
+		
+		return $array;
 	}
 	
 	public static function getAllFromStore($storeId){
@@ -27,8 +35,6 @@ class Item{
 		
 		if(strlen($ids)>0)
 			$ids = substr($ids, 0, strlen($ids)-1);
-			
-		var_dump($ids);
 	}
 }
 ?>

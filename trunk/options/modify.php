@@ -1,12 +1,8 @@
+<?php
+require_once 'inc/class.mysql.php';
 
-<style>
-.st_tbcss,.st_tdcss,.st_divcss,.st_ftcss{border:none;padding:0px;margin:0px}
-A.st_acss,A.st_acss:link,A.st_acss:visited,A.st_acss:active,A.st_acss:hover{background-color:transparent;font-style:normal;border:none}
-</style><font id="st_gl0"></font><font id="st_gl1"></font><font id="st_gl2"></font><font id="st_gl3"></font><font id="st_gl4"></font><font id="st_gl5"></font><font id="st_gl6"></font><font id="st_gl7"></font><font id="st_gl8"></font><font id="st_gl9"></font>
-<!-- end top_menu_blank.inc.htm -->
-<!-- start toolbar.inc.htm -->
-
-
+$db = Database::getInstance();
+?>
 <table class="menubar" border="0" cellpadding="0" cellspacing="0" width="100%">
 <tr>
 	<td class="menudottedline" width="40%"><div class="pathway"><a href="index.php?option=home" class="headerNavigation">Panel de Control</a> <?php echo SB_BREADCRUMB;?> <a href="index.php?pages=inventario_list" class="headerNavigation">Inventario</a></div></td>
