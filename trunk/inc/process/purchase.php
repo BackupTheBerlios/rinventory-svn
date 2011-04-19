@@ -2,7 +2,7 @@
 require 'inc/class.purchase.php';
 require 'inc/class.session.php';
 
-function purchaseAdd(){
+function purchase_add(){
 	$db = Database::getInstance();
 	$session = Session::getInstance();
 	$purchase = new Purchase();

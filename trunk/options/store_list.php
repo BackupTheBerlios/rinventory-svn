@@ -22,7 +22,7 @@ $res = $db->query("Select id,name,active,contact_name,email,phone from dvd_depar
 while($row = $db->getRow($res, 0)){  
 ?>
 	<tr>
-		<td><a href="index.php?pages=modify_alm&id=<?php echo $row['id'];?>"><?php echo $row['name'];?></a></td>
+		<td><a href="index.php?pages=store_edit&store=<?php echo $row['id'];?>"><?php echo $row['name'];?></a></td>
 		<td style="padding-left:1.5em"><span class='ui-icon <?php echo $row['active']==1 ? "ui-icon-check" : "ui-icon-cancel";?>'></span></td>
 		<td><?php echo $row['contact_name'];?></td>
 		<td><?php echo $row['email'];?></td>

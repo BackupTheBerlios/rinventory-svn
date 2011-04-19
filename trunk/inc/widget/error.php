@@ -8,7 +8,7 @@ if($log->isError()){
 <div class="ui-widget">
 	<div class='ui-state-error ui-corner-all' style="padding:0.8em">
 		<span style="float:left" class='ui-icon ui-icon-alert'></span>
-		<p style="margin-left:1.5em">
+		<div style="margin-left:1.5em">
 			<strong>Atenci&oacute;n:</strong> Ha ocurrido un error:
 			<ul class="error-list">
 			<?php
@@ -17,7 +17,7 @@ if($log->isError()){
 			}
 			?>
 			</ul>
-		</p>
+		</div>
 	</div>
 </div>
 <br />

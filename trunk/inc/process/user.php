@@ -2,7 +2,7 @@
 require_once 'inc/class.user.php';
 require_once 'inc/class.log.php';
 
-function userAdd(){
+function user_add(){
 	$log = Log::getInstance();
 	$user = new User();
 	$storeid = isset($_POST['store']) ? $_POST['store'] : 0;

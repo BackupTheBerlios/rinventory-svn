@@ -1,5 +1,6 @@
 <?php
 require_once 'inc/class.mysql.php';
+require_once 'inc/class.log.php';
 
 class Store{
 	public $id;
@@ -9,7 +10,27 @@ class Store{
 	public $contact;
 	public $email;
 	public $description;
+	public $address;
 	public $active;
+
+	/**
+	 * 
+	 */
+	private function setupSafeInput(){
+		$log = Log::getInstance();
+		
+		$this->name = strip_tags($this->name);
+		$this->phone = strip_tags($this->phone);
+		$this->fax = strip_tags($this->fax);
+		$this->contact = strip_tags($this->contact);
+		$this->email = strip_tags($this->email);
+		$this->description = strip_tags($this->description);
+		$this->address = strip_tags($this->address);
+		$this->active = ($this->active? 1 : 0);
+		
+		if (strlen($this->name) < 3)
+			$log->addError("Nombre debe tener por lo menos 3 caracteres.");
+	}
 	
 	/**
 	 * 
@@ -18,7 +39,7 @@ class Store{
 	public function read($storeid) {
 		$db = Database::getInstance();
 		
-		$sql = "SELECT name,phone,fax,contact_name contact,active,email,description FROM ".TBL_DEPARTMENT." WHERE id=$storeid";
+		$sql = "SELECT name,phone,fax,address,contact_name contact,active,email,description FROM ".TBL_DEPARTMENT." WHERE id=$storeid";
 		
 		$res = $db->query($sql);
 		
@@ -33,9 +54,48 @@ class Store{
 		$this->contact = $row['contact'];
 		$this->email = $row['email'];
 		$this->active = $row['active'];
+		$this->address = $row['address'];
 		$this->description = $row['description'];
 		
 		return true;
+	}
+	
+	/**
+	 * 
+	 * Enter description here ...
+	 */
+	public function update(){
+		$log = Log::getInstance();
+		
+		if (!is_numeric($this->id)){
+			$log->addError("Entrada de Almacen no especificada.");
+			return false;
+		}
+		
+		$db = Database::getInstance();		
+		$this->setupSafeInput();
+		
+		$sql = "UPDATE ".TBL_DEPARTMENT." SET ".
+			"name='".$db->escape($this->name)."',".
+			"contact_name='".$db->escape($this->contact)."',".
+			"phone='".$db->escape($this->phone)."',".
+			"active=$this->active,".
+			"address='".$db->escape($this->address)."',".
+			"fax='".$db->escape($this->fax)."',".
+			"email='".$db->escape($this->email)."',".
+			"description='".$db->escape($this->description)."' ".
+			"WHERE id=$this->id";
+		
+		$res = $db->query($sql);
+		
+		if (!$res)
+			$log->addError("No se pudo ejecutar actualizaci&oacute;n de datos.");
+
+		return $res;
+	}
+	
+	public function add(){
+		return false;	
 	}
 	
 	/**
