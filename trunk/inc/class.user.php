@@ -1,5 +1,5 @@
 <?php
-require_once 'inc/class.mysql.php';
+require_once 'inc/class.mysqli.php';
 
 class User{
 	public $id;
@@ -55,6 +55,7 @@ class User{
 		$this->active = $row['active'];
 		$this->username = $row['username'];
 		$this->storeid = $row['storeid'];
+		$db->dispose($res);
 		
 		return true;
 	}
@@ -70,10 +71,21 @@ class User{
 		$this->setupSafeText($db);
 		
 		$sql = "INSERT INTO ". TBL_USER ." ".
-			"(name,ape,address,username,pwd,email,CI,active,hw_added,phone,link_departament,level,last_update,image)".
+			"(name,ape".
+			"address,username,".
+			"pwd,email,".
+			"CI,active,".
+			"hw_added,last_update,".
+			"phone,level,".
+			"link_departament,image)".
 			" VALUES ".
-			"('$this->firstname','$this->lastname','$this->address','$this->username','$this->password',".
-			"'$this->email','$this->ci',$this->active,NOW(),'$this->phone',$storeid,$this->level,NOW(),'$this->imagepath')";
+			"('".$db->escape($this->firstname)."','".$db->escape($this->lastname)."',".
+			"'".$db->escape($this->address)."','".$db->escape($this->username)."',".
+			"'".$db->escape($this->password)."','".$db->escape($this->email)."',".
+			"'".$db->escape($this->ci)."',$this->active,".
+			"NOW(),NOW(),".
+			"'".$db->escape($this->phone)."',$this->level,".
+			"$storeid,'$this->imagepath')";
 		
 		$res = $db->query($sql);
 		
@@ -120,10 +132,14 @@ class User{
 		$sql = "SELECT id,name firstname,ape lastname,address,username,email,active,phone FROM ".TBL_USER;
 		$res = $db->query($sql);
 		$array = array();
-		
-		while($row = $db->getRow($res, 0)){
+		$row = $db->getRow($res);
+
+		while($row){
 			$array[] = $row;
+			$row = $db->getRow($res);
 		}
+		
+		$db->dispose($res);
 		
 		return $array;
 	}

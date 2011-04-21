@@ -1,5 +1,5 @@
 <?php
-require_once 'inc/class.mysql.php';
+require_once 'inc/class.mysqli.php';
 
 class Item{
 	public static function getAll($sortOrder, $sortField){
@@ -12,15 +12,19 @@ class Item{
 		
 		$sql = "SELECT id,link_type_item group_name,v_descr name,material FROM ".TBL_ITEM." $sort";
 		$res = $db->query($sql);
+		$row = $db->getRow($res);
 		
-		while($row = $db->getRow($res, 0)){
-			$array[] = $row;	
+		while($row){
+			$array[] = $row;
+			$row = $db->getRow($res);	
 		}
+		
+		$db->dispose($res);
 		
 		return $array;
 	}
 	
-	public static function getAllFromStore($storeId){
+	/*public static function getAllFromStore($storeId){
 		$db = Database::getInstance();
 		$ids = "";
 		
@@ -28,13 +32,13 @@ class Item{
 			"FROM ".TBL_LOT." l INNER JOIN ".TBL_ITEM." i ON l.name=i.id ".
 			"WHERE l.active=1 AND l.stock>0 ".
 			"GROUP BY i.id");
-		
+
 		while($row = $db->getRow($db, 0)){
 			$ids .= $row['id'].",";
 		}
 		
 		if(strlen($ids)>0)
 			$ids = substr($ids, 0, strlen($ids)-1);
-	}
+	}*/
 }
 ?>

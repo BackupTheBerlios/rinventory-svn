@@ -20,7 +20,7 @@ jQuery(function($){
 		showMonthAfterYear: false,
 		duration: 'fast',
 		showOn: 'both',
-		buttonImage: 'img/calendar.gif',
+		buttonImage: 'img/calendar.png',
 		buttonImageOnly: true,
 		yearSuffix: ''};
 	$.datepicker.setDefaults($.datepicker.regional['es']);

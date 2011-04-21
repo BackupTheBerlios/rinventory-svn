@@ -1,5 +1,5 @@
 <?php
-require_once 'inc/class.mysql.php';
+require_once 'inc/class.mysqli.php';
 require_once 'inc/class.log.php';
 
 class Store{
@@ -95,7 +95,38 @@ class Store{
 	}
 	
 	public function add(){
-		return false;	
+		$db = Database::getInstance();
+		$log = Log::getInstance();
+				
+		$this->setupSafeInput();
+		
+		$sql = "INSERT INTO ".TBL_DEPARTMENT.
+			"(name,".
+			"contact_name,".
+			"phone,".
+			"active,".
+			"address,".
+			"fax,".
+			"email,".
+			"description) ".
+			" VALUES ".
+			"('".$db->escape($this->name)."',".
+			"'".$db->escape($this->contact)."',".
+			"'".$db->escape($this->phone)."',".
+			"$this->active,".
+			"'".$db->escape($this->address)."',".
+			"'".$db->escape($this->fax)."',".
+			"'".$db->escape($this->email)."',".
+			"'".$db->escape($this->description)."')";
+		
+		$res = $db->query($sql);
+		
+		if (!$res)
+			$log->addError("No se pudo agregar datos.");
+		else
+			$this->id = $db->lastID();
+		
+		return $res;
 	}
 	
 	/**
@@ -110,10 +141,14 @@ class Store{
 			$sortSql = "ORDER BY $sortField $sortOrder";
 		
 		$res = $db->query("SELECT id, name FROM ".TBL_DEPARTMENT." WHERE active=1 $sortSql");
+		$row = $row = $db->getRow($res);
 		
-		while($row = $db->getRow($res, 0)){
+		while($row){
 			$array[] = $row;
+			$row = $row = $db->getRow($res);
 		}
+		
+		$db->dispose($res);
 		
 		return $array;
 	}

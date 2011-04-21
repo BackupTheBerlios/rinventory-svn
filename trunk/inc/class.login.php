@@ -1,5 +1,5 @@
 <?php
-require_once 'inc/class.mysql.php';
+require_once 'inc/class.mysqli.php';
 
 class Login
 {
@@ -7,8 +7,6 @@ class Login
 	private $num_active_users;   //Number of active users viewing site
 	private $num_active_guests;  //Number of active guests viewing site
 	private $num_members;        //Number of signed-up users
-   /* Note: call getNumMembers() to access $num_members! */
-
 	
 	/**
 	 * Constructor

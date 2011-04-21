@@ -47,6 +47,7 @@ echo '<div id="doc3" class="yui-t7">';
 				</li>
 				<li><a href="#">Almacen</a>
 					<ul>
+					<li><a href="index.php?pages=store_edit&store=new">Nuevo</a></li>
 					<li><a href="index.php?pages=store_list">Listado</a></li>
 					</ul>
 				</li>

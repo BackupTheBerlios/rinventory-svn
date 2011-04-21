@@ -24,7 +24,7 @@ foreach($users as $row){
 		"<td>{$row['lastname']}</td>".
 		"<td>{$row['email']}</td>".
 		"<td>{$row['phone']}</td>".
-		"<td class='date'>".($row['active'] == 1 ? "Si" :"No")."</td>".
+		"<td class='date'>".($row['active'] == 1 ? ACTIVE_ON : ACTIVE_OFF)."</td>".
 		"<td><a href='index.php?pages=user_detail&user={$row['id']}'><span class='ui-icon ui-icon-zoomin'></span></a></td>";
 }
 ?>

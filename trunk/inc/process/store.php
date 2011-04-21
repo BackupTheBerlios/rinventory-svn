@@ -15,8 +15,12 @@ function store_edit(){
 	$store->email = isset($_POST['email']) ? $_POST['email'] : "";
 	$store->description = isset($_POST['description']) ? $_POST['description'] : "";
 
-	if ($storeid == "new")
-		$store->add();
+	if ($storeid == "new"){
+		if ($store->add()){
+			header ("location: index.php?pages=store_detail&store=$store->id");
+			exit();
+		}
+	}
 	else
 		return $store->update();
 	

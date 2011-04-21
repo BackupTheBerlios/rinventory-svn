@@ -1,6 +1,6 @@
 <?php
 require 'inc/class.session.php';
-require_once 'inc/class.mysql.php';
+require_once 'inc/class.mysqli.php';
 
 $session = Session::getInstance();
 $db = Database::getInstance();

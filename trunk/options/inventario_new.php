@@ -1,5 +1,5 @@
 <?php
-require_once 'inc/class.mysql.php';
+require_once 'inc/class.mysqli.php';
 
 $db = Database::getInstance(); 
 $titem = "";

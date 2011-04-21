@@ -77,4 +77,5 @@ define("GUEST_LEVEL", 0);
 define("EMAIL_FROM_NAME", "YourName");
 define("EMAIL_FROM_ADDR", "youremail@address.com");
 define("EMAIL_WELCOME", false);
+
 ?>

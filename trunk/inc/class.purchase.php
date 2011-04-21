@@ -1,5 +1,5 @@
 <?php
-require_once 'inc/class.mysql.php';
+require_once 'inc/class.mysqli.php';
 
 class PurchaseDetail {
 	public $purchaseid;
@@ -41,7 +41,7 @@ class Purchase{
 		
 		$res = $db->query($sql);
 		
-		if ($res === false)
+		if (!$res)
 			return false;
 		
 		$purchaseid = $db->lastID();
@@ -95,15 +95,19 @@ class Purchase{
 		$sql = "SELECT line,description,quantity,price FROM ".TBL_PURCHASE_DETAIL." WHERE purchaseid=$purchaseid";
 		$res = $db->query($sql);
 		$this->detail = array();
-		
-		while($row = $db->getRow($res,0)){
+		$row = $db->getRow($res);
+		 
+		while($row){
 			$detail = new PurchaseDetail();
 			$detail->line = $row['line'];
 			$detail->description = 	$row['description'];
 			$detail->price = $row['price'];
 			$detail->quantity = $row['quantity'];
 			$this->detail[] = $detail;
+			$row = $db->getRow($res,0);
 		}
+		
+		$db->dispose($res);
 	}
 	
 	/**
@@ -121,9 +125,14 @@ class Purchase{
 		$sql = "SELECT id,code,amount,`date`,provider,gloss FROM ".TBL_PURCHASE." $sortSql";
 		$res = $db->query($sql);
 		$result = array();
+		$row = $db->getRow($res);
 		
-		while($row = $db->getRow($res, 0))
+		while($row){
 			$result[] = $row;
+			$row = $db->getRow($res);
+		}
+		
+		$db->dispose($res);
 		
 		return $result;
 	}
@@ -148,10 +157,14 @@ class Purchase{
 
 		$res = $db->query($sql);
 		$result = array();
+		$row = $db->getRow($res);
 		
-		while($row = $db->getRow($res, 0)){
+		while($row){
 			$result[] = $row;
+			$row = $db->getRow($res);
 		}
+		
+		$db->dispose($res);
 		
 		return $result;
 	}
@@ -164,9 +177,11 @@ class Purchase{
 		$db = Database::getInstance();
 		$sql = "SELECT SUM(amount) amount_paid FROM ".TBL_PURCHASE_PAYMENT." WHERE purchaseid=$purchaseid";
 		$res = $db->query($sql);
-		
+		 
 		if ($db->rows($res) == 1){
-			$row = $db->getRow($res, 0);
+			$row = $db->getRow($res);
+			$db->dispose($res);
+			
 			return $row['amount_paid'];
 		}
 		

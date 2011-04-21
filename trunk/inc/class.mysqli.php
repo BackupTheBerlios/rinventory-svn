@@ -47,13 +47,12 @@ class Database{
 		return self::$_instance; 
 	} 
  
-   /**
-    * 
-    */ 
-   private function connect(){ 
-   	$this->link = mysqli_connect($this->host, $this->user, $this->password, $this->db); 
-		//mysql_select_db($this->db, $this->link); 
-		@mysqli_query("SET NAMES 'utf8'"); 
+	/**
+	 * 
+	 */ 
+	private function connect(){ 
+		$this->link = mysqli_connect($this->host, $this->user, $this->password, $this->db);
+		mysqli_set_charset($this->link, "utf8");
 	} 
  
    /**
@@ -82,13 +81,22 @@ class Database{
 	public function rows($stmt){
 		return $stmt->num_rows;
 	}
+	
+	/**
+	 * 
+	 * Enter description here ...
+	 * @param unknown_type $stmt
+	 */
+	public function dispose($stmt){
+		mysqli_free_result($stmt);
+	}
    
-   /**
-    * Returns the last insert ID
-    */ 
-   public function lastID(){ 
+	/**
+	 * Returns the last insert ID
+	 */ 
+	public function lastID(){ 
 		return mysqli_insert_id($this->link); 
-   }
+	}
    
 	/**
 	 * 
@@ -96,7 +104,7 @@ class Database{
 	 * @param unknown_type $str
 	 */
 	public function escape($str){
-		return mysqli_real_escape_string($str);
+		return mysqli_real_escape_string($this->link, $str);
 	}
    
 	/**
