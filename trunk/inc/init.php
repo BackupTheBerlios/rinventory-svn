@@ -78,4 +78,11 @@ define("EMAIL_FROM_NAME", "YourName");
 define("EMAIL_FROM_ADDR", "youremail@address.com");
 define("EMAIL_WELCOME", false);
 
+// Status
+define('PURCHASE_STATUS_CANCELED', 1);
+define('PURCHASE_STATUS_PENDING', 2);
+define('PURCHASE_STATUS_INTRANSIT', 3);
+define('PURCHASE_STATUS_DELIVERED', 4);
+
+
 ?>

@@ -1,6 +1,5 @@
 <?php
 require 'inc/class.purchase.php';
-require 'inc/class.session.php';
 
 function purchase_add(){
 	$db = Database::getInstance();
@@ -16,7 +15,7 @@ function purchase_add(){
 	for ($i=0; $i<count($prices); $i++){
 		$detail = new PurchaseDetail();	
 		$detail->line = $i+1;
-		$detail->description = $db->escape($descriptions[$i]);
+		$detail->description = $descriptions[$i];
 		$detail->price = $prices[$i];
 		$detail->quantity = $quantity[$i];
 		$purchase->detail[] = $detail;
@@ -27,11 +26,28 @@ function purchase_add(){
 	$purchase->prepayment = isset($_POST['prepayment']) ? $_POST['prepayment'] : 0;
 	$purchase->provider = isset($_POST['provider']) ? $db->escape($_POST['provider']) : ""; 
 	$purchase->gloss = isset($_POST['gloss']) ? $db->escape($_POST['gloss']) : "";
-	$purchase->userid = $session->uniqueid;
 	
 	if($purchase->Add()){
 		header("Location: ".SITE_URL."index.php?pages=purchase_detail&purchase=$purchase->id");
+	}		
+}
+
+function purchase_edit(){
+	$session = Session::getInstance();
+	
+	if (!$session->checkLogin())
+		return false;
+	
+	$purchase = new Purchase();
+	$purchase->id = isset($_POST['purchase']) ? $_POST['purchase'] : "";
+	$purchase->status = isset($_POST['status']) ? $_POST['status'] : "";
+	$purchase->update();
+	
+	if (isset($_POST['payment']) && is_numeric($_POST['payment'])){
+		$purchasePayment = new PurchasePayment();
+		$purchasePayment->purchaseid = isset($_POST['purchase']) ? $_POST['purchase'] : "";
+		$purchasePayment->amount = isset($_POST['payment']) ? $_POST['payment'] : "";
+		$purchasePayment->add();
 	}
-		
 }
 ?>

@@ -1,10 +1,10 @@
-<p class="form-title">Registro de nueva compra</p><form method="POST" name="form1" action="">	<input type="hidden" value="purchase_new" name="page"/> 	<table class="form">	<tr>
+<p class="form-title">Registro de nueva compra</p><?phpinclude 'inc/widget/error.php'; ?><form method="POST" name="form1" action="">	<input type="hidden" value="purchase_new" name="page"/> 	<table class="form">	<tr>
 		<td class="label">C&oacute;digo:</td>
-		<td><input type="text" size="16" name="code" /></td>
+		<td><input type="text" size="16" name="code" /> <span class="mandatory">*</span></td>
 	</tr>
 	<tr>
 		<td class="label">Fecha:</td>
-		<td><input type="text" size="16" name="date" id="date" /></td>
+		<td><input type="text" size="16" name="date" id="date" /> <span class="mandatory">*</span></td>
 	</tr>
 	<tr>
 		<td class="label">Anticipo:</td>
@@ -12,7 +12,7 @@
 	</tr>
 	<tr>
 		<td class="label">Proveedor:</td>
-		<td><input type="text" size="30" name="provider" /></td>
+		<td><input type="text" size="30" name="provider" /> <span class="mandatory">*</span></td>
 	</tr>
 	<tr>
 		<td class="label">Observaciones:</td>
@@ -79,7 +79,7 @@ jQuery(document).ready(function(){
 	});
 	jQuery('#dialog').dialog({
 		modal: true,
-		autoOpen: false,
+		autoOpen: false,		title: '<?php echo ALERT_TITLE;?>',
 		buttons: {
 			'Aceptar': function(){
 				document.forms['form1'].submit();
@@ -92,7 +92,7 @@ jQuery(document).ready(function(){
 	jQuery('#dialog_error').dialog({
 		modal: true,
 		autoOpen: false,
-		title: 'Error....!',
+		title: '<?php echo ERROR_TITLE;?>',
 		buttons: {
 			'Aceptar': function(){jQuery(this).dialog('close');}
 		}
@@ -142,9 +142,9 @@ function calcTotal(){
 function checkData(){
 	var error = '';
 	if(!jQuery('input[name="code"]').val())
-		error += '<li>Debe ingresar un c&oacute;digo de compra</li>';
-	if(!jQuery('input[name="date"]').val())		error += '<li>Debe ingresar la fecha de compra</li>';
-	if(!jQuery('input[name="provider"]').val())		error += '<li>Debe ingresar el proveedor de la compra</li>';
-	if (Number(jQuery('#detail tfoot .total').text()) <= 0)		error += '<li>Detalle de compra incorrecto</li>';
-	if (error)		error = '<ul class="error-list">' + error + '</ul>';	return error;}
+		error += '<li>Debe ingresar un c&oacute;digo de compra.</li>';
+	if(!jQuery('input[name="date"]').val())		error += '<li>Debe ingresar la fecha de compra.</li>';
+	if(!jQuery('input[name="provider"]').val())		error += '<li>Debe ingresar el proveedor de la compra.</li>';
+	if (Number(jQuery('#detail tfoot .total').text()) <= 0)		error += '<li>Detalle de compra incorrecto.</li>';	if (Number(jQuery('#detail tfoot .total').text()) < Number(jQuery('input[name="prepayment"]').val()))		error += '<li>Anticipo no debe exceder monto total de compra.</li>';		
+	if (error)		error = '<ul>' + error + '</ul>';	return error;}
 </script>

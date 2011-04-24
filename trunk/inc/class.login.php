@@ -190,7 +190,7 @@ class Login
     */
    function getUserInfo($username){
    	$db = Database::getInstance();
-      $q = "SELECT * FROM ".TBL_USER." WHERE username = '$username'";
+      $q = "SELECT id,name firstname, ape lastname,address,username,email,active,phone,userid,level FROM ".TBL_USER." WHERE username = '$username'";
       $result = $db->query($q);
       
       // Error occurred, return given name by default

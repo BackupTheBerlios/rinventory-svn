@@ -7,20 +7,24 @@ a:active {color:#333333}
 #ft{font-size:.85em;text-align:center;margin:.5em 2em;}
 #mainwrapper{border:solid 1px #CCC;min-height:30em;padding:0.6em}
 
-p.form-title{font-size:1.4em;font-weight:bold;text-transform:capitalize;margin-bottom:.8em}
+p.form-title{font-size:1.5em;font-weight:bold;text-transform:capitalize;margin-bottom:.8em}
+p.form-subtitle{font-size:1.2em;font-weight:bold;text-transform:capitalize;margin:0.6em 0}
 
 table.default{border:solid 1px #CCC}
 table.default thead tr{background:url(ui-lightness/images/ui-bg_highlight-soft_100_eeeeee_1x100.png) 0 -60px repeat-x}
 table.default tr.alternate{background-color:#FBFBFB}
 table.default th{text-align:center;font-weight:bold;padding:.2em 0}
-table.default td{padding:.2em .25em;border:1px solid #CCC}
+table.default tbody td{padding:.2em .25em;border:1px solid #CCC}
 table.default .number{text-align:right}
 table.default .date{text-align:center}
-table.default .total{border-top:double;font-weight:bold}
+table.default .total{border-top:double;font-weight:bold;padding:.2em .25em}
 table.form .label{font-weight:bold;padding-right:.5em;text-align:right}
 
 .error-list li{text-align:left;margin-left:2.6em;list-style:disc}
 .error-list .ui-icon{float:left}
+
+.alert-list .ui-icon{float:left}
+.alert-list p{text-align:left;margin:0 0 .5em 1.6em}
 
 .toolbar-small {padding:.2em .5em;margin:.2em 0}
 .toolbar-small .button{font-size:.85em}

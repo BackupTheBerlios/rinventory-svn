@@ -9,6 +9,10 @@ function process_form(){
 			require 'inc/process/purchase.php';
 			purchase_add();
 			break;
+		case "purchase_edit":
+			require 'inc/process/purchase.php';
+			purchase_edit();
+			break;
 		case "store_edit":
 			require 'inc/process/store.php';
 			store_edit();

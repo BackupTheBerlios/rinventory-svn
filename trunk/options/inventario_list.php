@@ -25,7 +25,7 @@ $res = $db->query("SELECT id,link_type_item as titem,v_descr as name,link_marca 
 while($row = $db->getRow($res, 0)) {
 	$qry = $db->query("SELECT di.id, dl.id as idlote FROM ". 
 		TBL_ITEM ." di INNER JOIN ". TBL_LOT ." dl ON di.id=dl.id ".
-		"WHERE dl.name='{$row['id']}'");
+		"WHERE dl.itemid='{$row['id']}'");
 		
 	$rwy = $db->getRow($qry, 0);	 
 

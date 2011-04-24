@@ -25,6 +25,14 @@ class Formatter {
 	
 	/**
 	 * 
+	 * @param unknown_type $date
+	 */
+	public static function date($date){
+		return $date;
+	}
+	
+	/**
+	 * 
 	 * Enter description here ...
 	 * @param unknown_type $text
 	 * @param unknown_type $max
@@ -32,6 +40,7 @@ class Formatter {
 	public static function text($text, $max=50){
 		if (strlen($text) > $max)
 			return substr($text, 0, $max) . "...";
+		
 		return $text;
 	}
 }

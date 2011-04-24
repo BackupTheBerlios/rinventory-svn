@@ -2,7 +2,7 @@
 require 'inc/class.purchase.php';
 require 'inc/class.formatter.php';
 
-$list = Purchase::getAll("`date`","DESC");
+$purchases = Purchase::getAll("`date`","DESC");
 ?>
 <p class="form-title">Listado de Compras</p>
 <table class="default">
@@ -11,20 +11,27 @@ $list = Purchase::getAll("`date`","DESC");
 		<th style="width:8em">C&oacute;digo</th>
 		<th style="width:8em">Fecha</th>
 		<th style="width:12em">Proveedor</th>
+		<th>Estado</th>
 		<th>Observaci&oacute;n</th>
 		<th style="width:8em">Monto <?php echo SB_CURRENCY;?></th>
 		<th style="width:8em">Saldo <?php echo SB_CURRENCY;?></th>
+		<th colspan="2">&nbsp;</th>
 	</tr>
 </thead>
 <tbody>
 	<?php
-	foreach ($list as $row){
-		echo "<tr><td><a href='index.php?pages=purchase_detail&purchase={$row['id']}'>{$row['code']}</a></td>".
-			"<td class='date'>{$row['date']}</td>".
-			"<td>{$row['provider']}</td>".
-			"<td>".(strlen($row['gloss']) > 50 ? substr($row['gloss'], 0, 50)."..." : $row['gloss'])."</td>".
-			"<td class='number'>".Formatter::number($row['amount'])."</td>".
-			"<td class='number'>".Formatter::number($row['amount'] - Purchase::getAmountPaid($row['id']))."</td></tr>";
+	foreach ($purchases as $purchase){
+		echo "<tr>";
+		echo "<td>$purchase->code</td>";
+		echo "<td class='date'>".Formatter::date($purchase->date)."</td>";
+		echo "<td>$purchase->provider</td>";
+		echo "<td>{$PURCHASE_STATUS[$purchase->status]}</td>";
+		echo "<td>".Formatter::text($purchase->gloss)."</td>";
+		echo "<td class='number'>".Formatter::number($purchase->amount)."</td>";
+		echo "<td class='number'>".Formatter::number($purchase->amount - Purchase::getAmountPaid($purchase->id))."</td>";
+		echo "<td class='ui-state-default'><a href='index.php?pages=purchase_detail&purchase=$purchase->id' title='Ver'>".ICON_ZOOMIN."</a></td>";
+		echo "<td class='ui-state-default'><a href='index.php?pages=purchase_edit&purchase=$purchase->id' title='Editar'>".ICON_PENCIL."</a></td>";
+		echo "</tr>";
 	} 
 	?>
 </tbody>

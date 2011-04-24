@@ -53,8 +53,35 @@ class Database{
 	private function connect(){ 
 		$this->link = mysqli_connect($this->host, $this->user, $this->password, $this->db);
 		mysqli_set_charset($this->link, "utf8");
-	} 
+	}
+
+	/**
+	 * 
+	 */
+	public function startTransaction(){
+		mysqli_autocommit($this->link, false);
+	}
  
+	/**
+	 * 
+	 * @param unknown_type $stmt
+	 */
+	public function commit(){
+		$res = mysqli_commit($this->link);
+		
+		mysqli_autocommit($this->link, true);
+		
+		return $res;
+	}
+	
+	/**
+	 * 
+	 */
+	public function rollback(){
+		mysqli_rollback($this->link);
+		mysqli_autocommit($this->link, true);
+	}
+	
    /**
     * Execute query
     * @param string $sql
@@ -63,7 +90,8 @@ class Database{
       $this->stmt = mysqli_query($this->link, $sql); 
       
       return $this->stmt; 
-   } 
+   }
+   
  
    /**
     * Returns a row of query
