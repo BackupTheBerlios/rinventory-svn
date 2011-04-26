@@ -68,6 +68,7 @@ include 'inc/widget/error.php';
 				</select>
 				<button id="button_add" class="button">A&ntilde;adir</button>
 				<button id="remove_row" class="button">Eliminar Filas Seleccionadas</button>
+				<span id="item_info"></span>
 			</div>
 		</td>
 	</tr>
@@ -78,7 +79,7 @@ include 'inc/widget/error.php';
 				<thead>	
 				<tr>
 					<td>&nbsp;</td>
-					<th>#</th>
+					<th style="width:2em">#</th>
 					<th style="width:30em">Descripci&oacute;n</th>
 					<th>Precio</th>
 					<th>Cantidad</th>
@@ -117,7 +118,8 @@ var ITEMS = false;
 jQuery(document).ready(function(){
 	jQuery('#fecha').datepicker();
 	fillItems();
-
+	calcStock();
+	
 	jQuery('#button_add').button().click(function(){
 		var i = jQuery('#items_selector').val();
 
@@ -129,7 +131,7 @@ jQuery(document).ready(function(){
 				'<td class="row-counter">&nbsp;</td>'+
 				'<td><input type="hidden" name="lot[]" value="' + ITEMS[i]['lotid'] + '"/>' + ITEMS[i]['name'] + '</td>' +
 				'<td class="number">'+
-					'<select><option value="price_unit">Unidad</option><option value="price_pack">Paquete</option><option value="price_box">Caja</option></select>'+
+					'<select><option value="price_unit">Unidad</option><option value="price_pack" disabled="disabled">Paquete</option><option value="price_box" disabled="disabled">Caja</option></select>'+
 					'<input type="text" name="price[]" size="9" value="' + ITEMS[i]['price_unit'] + '"/>'+
 				'</td>'+
 				'<td class="number"><input type="text" value="0" name="quantity[]" size="9"/></td>'+
@@ -156,11 +158,17 @@ jQuery(document).ready(function(){
 
 		qtyObj.blur(function(){
 			calcTotal();
+			calcStock();
+			updateItemInfo();		
 		});
 		
 		return false;
 	});
 
+	jQuery('#items_selector').change(function(){
+		updateItemInfo();
+	});
+	
 	jQuery('#remove_row').button().click(function(){
 		jQuery('#detail tbody input:checked').each(function(){
 			jQuery(this).closest('tr').remove();
@@ -226,6 +234,8 @@ function refresh(){
 	jQuery('#detail tbody tr:odd').addClass('alternate');
 	jQuery('#detail tbody tr:even').removeClass('alternate');
 	calcTotal();
+	calcStock();
+	updateItemInfo();
 }
 
 function calcTotal(){
@@ -243,23 +253,50 @@ function calcTotal(){
 
 	jQuery('#detail tfoot .total').text(total.toFixed(2));
 }
+
+function calcStock(){
+	// reset stock to sell
+	for(var i in ITEMS){
+		ITEMS[i]['stock_to_sell'] = 0;
+	}
+	
+	jQuery('#detail tbody input:checkbox').each(function(){
+		var qty = jQuery(this).closest('tr').find('input[name^=quantity]').val();
+
+		qty = Number(qty);
+		
+		if (!qty)
+			qty = 0;
+
+		ITEMS[this.value]['stock_to_sell'] += qty;
+	});
+}
+
+function updateItemInfo(){
+	var selector = jQuery('#items_selector').val();
+	var itemInfo = jQuery('#item_info');
+	
+	if (selector == ''){
+		itemInfo.html('');
+		return;
+	}
+	
+	var info = ITEMS[selector];
+	var stock = info['stock'] - info['stock_to_sell']; 
+	itemInfo.html('(' + info['type'] + ') En stock: ' + stock);
+}
+
 function fillItems(){
 	var select = jQuery('#items_selector');
 	
 	ITEMS = JSON.parse(jQuery('#items_data').val());
 	
 	for(var i in ITEMS){
-		select.append('<option value="' + i +'">' + ITEMS[i]['name'] + '</option>');	
+		var txt = ITEMS[i]['name'] + ' &rarr; Lote: ' + ITEMS[i]['lotid'];
+		select.append('<option value="' + i +'">' + txt + '</option>');	
 	}
 }
-function addItem(){
-	var itemData = JSON.parse(jQuery('#item_selector').val());
-	var tableItems = jQuery('#table_items');
-	alert(tableItems.find('tbody').length);
-	tableItems.find('tbody').append('<tr><td></td>'+
-			'<td>'+itemData.name+'</td>'+
-			'<td><input type="text" value="" class="decimal"/></td></tr>');
-}
+
 function checkData(){
 	var error = '';
 
@@ -272,6 +309,11 @@ function checkData(){
 	if (!jQuery('input[name="customer"]').val())
 		error += '<li>Debe introducir Cliente.</li>';
 
+	for (var i in ITEMS){
+		if (ITEMS[i]['stock'] < ITEMS[i]['stock_to_sell'])
+			error += '<li>Insuficiente stock: ' + ITEMS[i]['name'] + ' -> Lote ' + ITEMS[i]['lotid'] + '</li>'; 
+	}
+	
 	if (error)
 		error = '<ul>' + error + '</ul>';
 		
