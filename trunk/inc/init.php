@@ -28,9 +28,6 @@ define('TBL_SELL', TABLE_PREFIX . 'sell');
 define('TBL_SELL_DETAIL', TABLE_PREFIX . 'sell_detail');
 define('TBL_SELL_PAYMENT', TABLE_PREFIX . 'sell_payment');
 
-define('SB_BREADCRUMB', '&raquo;');
-define('SB_CURRENCY', 'Bs. ');
-
 /**
  * This boolean constant controls whether or
  * not the script keeps track of active users

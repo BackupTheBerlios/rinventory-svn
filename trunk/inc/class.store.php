@@ -204,5 +204,15 @@ class Store{
 			
 		return true;
 	}
+	
+	/**
+	 * Products under min stock
+	 * Enter description here ...
+	 */
+	public static function getRunningOut($storeIds){
+		/*$db = Database::getInstance();
+		$sql = "SELECT i.id,i.link_type_item type,i.v_descr name FROM ".TBL_ITEM." i INNER JOIN ".TBL_LOT." l ON i.id=l.itemid WHERE l.id=$lotid";
+		$res = $db->query($sql);*/
+	}
 } 
 ?>

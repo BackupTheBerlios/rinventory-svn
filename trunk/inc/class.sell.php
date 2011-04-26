@@ -2,6 +2,7 @@
 require_once 'inc/class.mysqli.php';
 require_once 'inc/class.session.php';
 require_once 'inc/class.log.php';
+require_once 'inc/class.item.php';
 
 class SellPayment{
 	public $sellid;
@@ -111,7 +112,8 @@ class SellDetail{
 	public $line;
 	public $description;
 	public $price;
-	public $quantity;	
+	public $quantity;
+	public $lotid;
 	
 	public static function getAll($sellid){
 		$db = Database::getInstance();
@@ -180,7 +182,7 @@ class Sell{
 			"'".$db->escape($this->customer)."',$amount,$this->prepayment,$this->paymentType,".
 			"'".$db->escape($this->gloss)."',".PURCHASE_STATUS_PENDING.",'".$db->escape($this->nit)."',".
 			"$this->storeid,'$user','$user')";
-		var_dump($sql);
+		
 		$db->startTransaction();
 		$res = $db->query($sql);
 		
@@ -210,6 +212,48 @@ class Sell{
 		}
 		
 		foreach($this->detail as $detail){
+			if (!$detail->quantity || !$detail->price)
+				continue;
+
+			// Check available stock 
+			$sql = "SELECT stock FROM ".TBL_LOT." WHERE id=$detail->lotid";
+			$res = $db->query($sql);
+			
+			if (!$res){
+				$db->rollback();
+				$log->addError("No se puede verificar stock disponible de lote $detail->lotid.");
+				return false;
+			}
+			
+			if ($db->rows($res) != 1){
+				$db->dispose($res);
+				$db->rollback();
+				$log->addError("Lote $detail->lotid no est&aacute; disponible.");
+				return false;
+			}
+			
+			$row = $db->getRow($res);
+			
+			if ($row['stock'] < $detail->quantity){
+				$db->dispose($res);
+				$db->rollback();
+				$log->addError("Stock insuficiente en lote $detail->lotid.");
+				return false;
+			}
+
+			// Update stock for lot
+			$sql = "UPDATE ".TBL_LOT." SET stock=stock-$detail->quantity WHERE id=$detail->lotid";
+			$res = $db->query($sql);
+			
+			if (!$res){
+				$db->rollback();
+				$log->addError("No se puede no se puede actualizar stock de lote $detail->lotid.");
+				return false;
+			}
+			
+			// Insert detail
+			$item = Item::getFromLot($detail->lotid);
+			$detail->description = $item->name;	
 			$sql = "INSERT INTO ".TBL_SELL_DETAIL." (sellid,line,description,quantity,price)".
 				" VALUES ".
 				"($sellid,$detail->line,'$detail->description',$detail->quantity,$detail->price)";

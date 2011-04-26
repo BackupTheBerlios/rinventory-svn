@@ -1,6 +1,5 @@
 <?php
 require 'inc/class.sell.php';
-require_once 'inc/class.item.php';
 
 function sell_add(){
 	$db = Database::getInstance();
@@ -15,12 +14,11 @@ function sell_add(){
 		return false;
 		
 	for ($i=0; $i<count($prices); $i++){
-		$item = Item::getFromLot($lots[$i]);	
 		$detail = new SellDetail();	
 		$detail->line = $i+1;
-		$detail->description = $item->name;
 		$detail->price = $prices[$i];
 		$detail->quantity = $quantity[$i];
+		$detail->lotid = $lots[$i];
 		$sell->detail[] = $detail;
 	}
 	

@@ -1,4 +1,4 @@
-<p class="form-title">Compra</p>
+<p class="form-title">Venta</p>
 <?php
 require 'inc/class.sell.php';
 require 'inc/class.formatter.php';
@@ -32,7 +32,7 @@ if ($isValid){
 	<td><?php echo $sell->id;?></td>
 </tr>
 <tr>
-	<td class="label">Estado</td>
+	<td class="label">Estado:</td>
 	<td><?php echo $PURCHASE_STATUS[$sell->status];?></td>
 </tr>
 <tr>
