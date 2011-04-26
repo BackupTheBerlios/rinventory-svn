@@ -1,0 +1,1 @@
+<p class="form-title">Detalle Almacen</p>

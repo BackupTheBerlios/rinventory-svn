@@ -11,7 +11,7 @@ if(!$user->read($userid)){
 	$log = Log::getInstance();
 	$log->addError("Informaci&oacute;n de Usuario no disponible");
 }
-else
+else if($user->storeid)
 	$store->read($user->storeid);
 ?>
 <p class="form-title">Informaci&oacute;n de Usuario</p>

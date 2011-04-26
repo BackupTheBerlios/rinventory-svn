@@ -17,12 +17,16 @@ define('TBL_ITEM_TYPE', TABLE_PREFIX . 'type_item');
 define('TBL_LOT', TABLE_PREFIX . 'lote');
 define('TBL_MARKER', TABLE_PREFIX . 'marker');
 define('TBL_PACKAGE', TABLE_PREFIX . 'paquete');
+define('TBL_SPESOR', TABLE_PREFIX. 'spesor');
 define('TBL_USER', TABLE_PREFIX . 'user');
 define('TBL_USER_ONLINE', TABLE_PREFIX . 'user_online');
 define('TBL_VELOCITY', TABLE_PREFIX . 'velocity');
 define('TBL_PURCHASE', TABLE_PREFIX . 'purchase');
 define('TBL_PURCHASE_DETAIL', TABLE_PREFIX . 'purchase_detail');
 define('TBL_PURCHASE_PAYMENT', TABLE_PREFIX . 'purchase_payment');
+define('TBL_SELL', TABLE_PREFIX . 'sell');
+define('TBL_SELL_DETAIL', TABLE_PREFIX . 'sell_detail');
+define('TBL_SELL_PAYMENT', TABLE_PREFIX . 'sell_payment');
 
 define('SB_BREADCRUMB', '&raquo;');
 define('SB_CURRENCY', 'Bs. ');
@@ -83,6 +87,7 @@ define('PURCHASE_STATUS_CANCELED', 1);
 define('PURCHASE_STATUS_PENDING', 2);
 define('PURCHASE_STATUS_INTRANSIT', 3);
 define('PURCHASE_STATUS_DELIVERED', 4);
-
+define('PAYMENT_TYPE_CASH', 1);
+define('PAYMENT_TYPE_CREDIT', 2);
 
 ?>

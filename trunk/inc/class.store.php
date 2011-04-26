@@ -141,11 +141,18 @@ class Store{
 			$sortSql = "ORDER BY $sortField $sortOrder";
 		
 		$res = $db->query("SELECT id, name FROM ".TBL_DEPARTMENT." WHERE active=1 $sortSql");
+		
+		if (!$res)
+			return $array;
+		
 		$row = $row = $db->getRow($res);
 		
 		while($row){
-			$array[] = $row;
-			$row = $row = $db->getRow($res);
+			$store = new Store();
+			$store->id = $row['id'];
+			$store->name = $row['name'];
+			$array[] = $store;
+			$row = $db->getRow($res);
 		}
 		
 		$db->dispose($res);
@@ -177,10 +184,10 @@ class Store{
 			}
 			else if ($lot['stock'] > $quantity){
 				$res = $db->query("INSERT INTO ".TBL_LOT." ".
-					"(name,stock,active,idalmacen,costo,hw_added,by_added,by_modify,hw_updated,tran_mar,tran_ter,aduana,trans_bank,carga,otros,price_final,obs)".
+					"(itemid,stock,active,idalmacen,costo,hw_added,by_added,by_modify,hw_updated,tran_mar,tran_ter,aduana,trans_bank,carga,otros,price_final,obs)".
 					" VALUES ".
-					"('{$lot['name']}',$quantity,1,$targetStore,{$lot['costo']},NOW(),$uid,$uid,NOW(),{$lot['tran_mar']},{$lot['tran_ter']},{$lot['aduana']},{$lot['trans_bank']},{$lot['carga']},{$lot['otros']},{$lot['price_final']},'');");
-				
+					"('{$lot['itemid']}',$quantity,1,$targetStore,{$lot['costo']},NOW(),$uid,$uid,NOW(),{$lot['tran_mar']},{$lot['tran_ter']},{$lot['aduana']},{$lot['trans_bank']},{$lot['carga']},{$lot['otros']},{$lot['price_final']},'');");
+			
 				if (!$res)
 					return false;
 				

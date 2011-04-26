@@ -71,7 +71,7 @@ class User{
 		$this->setupSafeText($db);
 		
 		$sql = "INSERT INTO ". TBL_USER ." ".
-			"(name,ape".
+			"(name,ape,".
 			"address,username,".
 			"pwd,email,".
 			"CI,active,".
@@ -86,7 +86,7 @@ class User{
 			"NOW(),NOW(),".
 			"'".$db->escape($this->phone)."',$this->level,".
 			"$storeid,'$this->imagepath')";
-		
+
 		$res = $db->query($sql);
 		
 		if (!$res)
@@ -109,12 +109,13 @@ class User{
 			"name='$this->firstname',".
 			"ape='$this->lastname',".
 			"username='$this->username',".
-			"pwd='$this->password',".
+			"address='$this->address',".
+			($this->password ? "pwd='$this->password'," : "").
 			"email='$this->email',".
 			"CI='$this->ci',".
 			"active=$this->active,".
 			"phone='$this->phone',".
-			"link_departament=$this->storeid,".
+			"link_departament=".($this->storeid ? $this->storeid : "NULL").",".
 			"level=$this->level,".
 			"last_update=NOW(),".
 			"image='$this->imagepath' ".

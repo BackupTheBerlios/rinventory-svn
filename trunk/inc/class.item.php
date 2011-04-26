@@ -2,6 +2,10 @@
 require_once 'inc/class.mysqli.php';
 
 class Item{
+	public $id;
+	public $name;
+	public $type;
+	
 	public static function getAll($sortOrder, $sortField){
 		$db = Database::getInstance();
 		$sort = "";
@@ -24,21 +28,51 @@ class Item{
 		return $array;
 	}
 	
-	/*public static function getAllFromStore($storeId){
+	public static function getAllFromStore($storeid){
 		$db = Database::getInstance();
-		$ids = "";
+		$result = array();
+		$sql = "SELECT l.itemid, l.id lotid,sum(l.stock) stock ".
+			"FROM ".TBL_LOT." l WHERE l.active=1 AND l.idalmacen=$storeid GROUP BY l.itemid, l.id HAVING stock>0";
 		
-		$db->query("SELECT i.id ".
-			"FROM ".TBL_LOT." l INNER JOIN ".TBL_ITEM." i ON l.name=i.id ".
-			"WHERE l.active=1 AND l.stock>0 ".
-			"GROUP BY i.id");
+		$sql = "SELECT i.id,i.v_descr name,i.link_type_item type,i.material,i.price_unit,i.price_paq price_pack,i.price_box,il.lotid,il.stock ".
+			"FROM ".TBL_ITEM." i INNER JOIN ($sql) il ON i.id=il.itemid";
+				
+		$res = $db->query($sql);
 
-		while($row = $db->getRow($db, 0)){
-			$ids .= $row['id'].",";
+		if (!$res)
+			return $result;
+		
+		$row = $db->getRow($res);
+		
+		while($row){
+			$result[] = $row;	
+			$row = $db->getRow($res);
 		}
 		
-		if(strlen($ids)>0)
-			$ids = substr($ids, 0, strlen($ids)-1);
-	}*/
+		$db->dispose($res);
+		
+		return $result;
+	}
+	
+	public static function getFromLot($lotid){
+		$db = Database::getInstance();
+		$sql = "SELECT i.id,i.link_type_item type,i.v_descr name FROM ".TBL_ITEM." i INNER JOIN ".TBL_LOT." l ON i.id=l.itemid WHERE l.id=$lotid";
+		$res = $db->query($sql);
+		$item = new Item();
+		
+		if (!$res)
+			return $item;
+			
+		if ($db->rows($res) == 1){
+			$row = $db->getRow($res);
+			$item->id = $row['id'];
+			$item->name = $row['name'];
+			$item->type = $row['type'];
+		}
+		
+		$db->dispose($res);
+		
+		return $item; 
+	}
 }
 ?>

@@ -12,8 +12,8 @@ $users = User::getAll();
 	<th style="width:15em">Apellido</th>
 	<th style="width:10em">Email</th>
 	<th style="width:8em">Tel&eacute;fono</th>
-	<th>Activo</th>
-	<th>&nbsp;</th>
+	<th>Estado</th>
+	<th colspan="2">&nbsp;</th>
 </tr>
 </thead>
 <tbody>
@@ -25,7 +25,8 @@ foreach($users as $row){
 		"<td>{$row['email']}</td>".
 		"<td>{$row['phone']}</td>".
 		"<td class='date'>".($row['active'] == 1 ? ACTIVE_ON : ACTIVE_OFF)."</td>".
-		"<td><a href='index.php?pages=user_detail&user={$row['id']}'><span class='ui-icon ui-icon-zoomin'></span></a></td>";
+		"<td class='ui-state-default'><a href='index.php?pages=user_detail&user={$row['id']}'>".ICON_ZOOMIN."</a></td>".
+		"<td class='ui-state-default'><a href='index.php?pages=user_edit&user={$row['id']}'>".ICON_PENCIL."</a></td></tr>";
 }
 ?>
 </tbody>

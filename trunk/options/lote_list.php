@@ -34,7 +34,7 @@ while($row = $db->getRow($res, 0)){
 				<th>Almacen</th>
 				<th>Stock</th>
 				<th>Precio Final</th>
-				<th>Activo</th>
+				<th style="width:4em">Estado</th>
 			</tr>
 			</thead>
 			<tbody>
@@ -47,17 +47,13 @@ $res = $db->query("SELECT dl.id, ".
 	"dl.stock, ".
 	"dl.active, ".
 	"dl.price_final ".
-	"FROM ".TBL_LOT." dl INNER JOIN ".TBL_ITEM." di ON dl.name=di.id INNER JOIN ".TBL_DEPARTMENT." dd ON dd.id=dl.idalmacen ".
+	"FROM ".TBL_LOT." dl INNER JOIN ".TBL_ITEM." di ON dl.itemid=di.id INNER JOIN ".TBL_DEPARTMENT." dd ON dd.id=dl.idalmacen ".
 	"WHERE di.id=$itemid AND dl.stock>0 ".	($storeid ? "AND dd.id=$storeid" : ""));
 
 $sw=0;
 $cnt=1;
 
 while($row = $db->getRow($res, 0)) {
-	$sim="tick.png";
-	
-	if($row['active']==0)
-		$sim="publish_x.png";  
 ?>
 			
 			<tr class="row<?php echo $sw;?>">
@@ -65,7 +61,7 @@ while($row = $db->getRow($res, 0)) {
 				<td><?php echo $row['store']; ?></td>				
 				<td class="number"><?php echo $row['stock'];?></td>
 				<td class="number"><?php echo $row['price_final'];?></td>
-				<td class="date"><img src="img/sweb/<?php echo $sim;?>" alt="Activo" border="0"/></td>
+				<td style="padding-left:1em"><?php echo $row['active'] == 1 ? ACTIVE_ON : ACTIVE_OFF;?></td>
 				<!-- <td><a href="index.php?pages=modify_lot&id=<?php echo $row['id'];?>"><img src="img/sweb/application_form_edit.png" border="0"/></a></td> -->
 			</tr>
 <?php 
@@ -78,7 +74,7 @@ while($row = $db->getRow($res, 0)) {
 <?php
 $res = $db->query("SELECT dl.idalmacen, ".
 	"SUM(dl.stock) stock ".
-	"FROM ".TBL_LOT." dl INNER JOIN ".TBL_ITEM." di ON dl.name=di.id ".
+	"FROM ".TBL_LOT." dl INNER JOIN ".TBL_ITEM." di ON dl.itemid=di.id ".
 	"WHERE di.id=$itemid AND dl.active=1 ".	
 	($storeid ? "AND dl.idalmacen=$storeid " : "").
 	"GROUP BY dl.idalmacen");

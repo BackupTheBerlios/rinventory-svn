@@ -3,75 +3,21 @@ require_once 'inc/class.mysqli.php';
 
 $db = Database::getInstance();
 ?>
-<table class="menubar" border="0" cellpadding="0" cellspacing="0" width="100%">
-<tr>
-	<td class="menudottedline" width="40%"><div class="pathway"><a href="index.php?option=home" class="headerNavigation">Panel de Control</a> <?php echo SB_BREADCRUMB;?> <a href="index.php?pages=inventario_list" class="headerNavigation">Inventario</a></div></td>
-	<td class="menudottedline" align="right">
-		<table id="toolbar" border="0" cellpadding="0" cellspacing="0">
-		<tr align="center" valign="middle">
-		<!-- start icons_toolbar_edit.inc.htm -->
-			<td>  
-				<a class="toolbar" href="javascript:if(jQuery('#name').val()==''){alert('Por favor ingrese el nombre');} else if(jQuery('#stockmin').val()==''){alert('Por favor ingrese el Stock Mínimo');} else{ showMainMenu();submitbutton('save');}" onclick=""> <img src="img/sweb/save_f2.png" alt="Activo" name="active" align="middle" border="0"/> <br> Guardar </a>
-			</td>
-			<td>&nbsp;</td>
-			<td>
-				<a class="toolbar" href="javascript:showMainMenu();submitbutton('cancel');" onClick=""> <img src="img/sweb/cancel_f2.png" alt="Cancelar" name="new" align="middle" border="0"/> <br/> Cancelar</a>
-			</td>
-			<td>&nbsp;</td>
-		<!-- end icons_toolbar_edit.inc.htm -->
-		</tr>
-		</table>
-	</td>
-</tr>
-</table>
+<!-- <a class="toolbar" href="javascript:if(jQuery('#name').val()==''){alert('Por favor ingrese el nombre');} else if(jQuery('#stockmin').val()==''){alert('Por favor ingrese el Stock Mínimo');} else{ showMainMenu();submitbutton('save');}" onclick=""> <img src="img/sweb/save_f2.png" alt="Activo" name="active" align="middle" border="0"/> <br> Guardar </a> -->
 
-<!-- end toolbar.inc.htm -->
-<!-- start company.inc.htm -->
-
-<div class="centermain" align="center">
-  <div class="main">
-    <!-- start form_users_edit.inc.htm -->
-<script type="text/javascript"> 
-// don't remove this script
-function ReloadCat(){	
-	var f=document.adminForm;
-	var prod=f.items.options[f.items.selectedIndex].text;
-	
-	if (prod=='Dvd-cd')
-		document.location='index.php?pages=inventario_new&item=multiple&prod='+prod;
-	else {
-		if (prod=='Estuches')
-			document.location='index.php?pages=inventario_new&item=normal&prod='+prod;
-		else 
-			document.location='index.php?pages=inventario_new&item=stnd&prod='+prod;
-	}
-}
-</script> 
-<table class="adminheading">
-<tr>
-	<th class="categories"><img src="img/sweb/inventario.png" width="48" height="48" name="logo_Inventario" border="0" class="icon-png" alt="Inventario"> Inventario</th>
-</tr>
-</table>
 <?php
 if(isset($_GET['item']))
 	$titem=$_GET['item'];
 ?>
 
 <form action="index.php?pages=inventario&item=<?php echo $titem;?>&hw=mdf" method="post" name="adminForm" enctype="multipart/form-data">
-  <table class="adminform">
-    <!--DWLayoutTable-->
-    <tbody>
-      <tr>
-        <th colspan="3">Formulario de Registro</th>
-      </tr>
-
-      <tr>
-	    <td nowrap="nowrap"><div align="right">Producto:</div></td>
-      
-        
-	    <td>
-			<select name="items" id="items" style="width:250px;" class="text_area" onChange="ReloadCat()">
-<?php  	
+	<table class="form">
+	<tbody>
+	<tr>
+		<td class="label">Producto:</td>  
+		<td>
+			<select name="items" id="items">
+			<?php  	
 $slc="";
 $titem="";
 
@@ -95,26 +41,25 @@ if ($db->rows($res, 0)>0)
 		</td>
 	</tr>
 	<tr>
-		<td nowrap="nowrap" width="162"><div align="right">Nombre:</div></td>
-        <td><input name="name" type="text" class="text_area" id="name" value="<?php echo $row['v_descr'];?>" size="25" maxlength="25"> 
-        <span class="obligatorio">*</span>        </td>
+		<td class="label">Nombre:</td>
+		<td><input name="name" type="text" id="name" value="<?php echo $row['v_descr'];?>" size="25" maxlength="25"/> <span class="mandatory">*</span></td>
 	</tr> 
 <?php 
 
 if($titem!="multiple"){
 ?>
 	<tr>
-		<td nowrap="nowrap"><div align="right">Material:</div></td>
-		<td><input name="material" type="text" class="text_area" id="material" value="<?php echo $row['material'];?>" size="25" maxlength="25" /> <span class="obligatorio">*</span></td>
+		<td class="label">Material:</td>
+		<td><input name="material" type="text" id="material" value="<?php echo $row['material'];?>" size="25" maxlength="25" /> <span class="mandatory">*</span></td>
 	</tr>
 <?php 
 } 
 
 if($titem=="stnd") { ?>
 	<tr>
-		<td nowrap="nowrap"><div align="right">Color:</div></td>
+		<td class="label">Color:</td>
 		<td>
-			<select name="color" id="select" style="width:250px;" class="text_area">
+			<select name="color" id="select">
 			<option value=""></option>
 <?php  
 	$slc="selected='selected'";
@@ -126,7 +71,6 @@ if($titem=="stnd") { ?>
 <?php
 	}
 ?>
-		 
 			</select>	 
 		</td>
 	</tr>
@@ -135,9 +79,9 @@ if($titem=="stnd") { ?>
 
 if($titem=="normal") { ?>
 	<tr>
-		<td nowrap="nowrap"><div align="right">Espesor:</div></td>
+		<td class="label">Espesor:</td>
 		<td>
-			<select name="espes" id="espes" style="width:250px;" class="text_area">
+			<select name="espes" id="espes">
 			<option value=""></option>
 <?php  
 	$resc=$db->query("Select * from dvd_spesor");
@@ -148,17 +92,16 @@ if($titem=="normal") { ?>
 <?php
 	}
 ?>
-			</select>	 
-			<span class="obligatorio">*</span>
+			</select> <span class="mandatory">*</span>
 		</td>
 	</tr>
 <?php 
 }
 ?>
 	<tr>
-	    <td nowrap="nowrap"><div align="right">Marca:</div></td>
+	    <td class="label">Marca:</td>
 	    <td>
-			<select name="marker" id="select" style="width:250px;" class="text_area">	
+			<select name="marker" id="select">	
 <?php 
 $slc="selected='selected'";
 $resc=$db->query("Select * from dvd_marker");
@@ -181,29 +124,27 @@ if($titem=="multiple"){
 		$chek="checked='checked'"; 
 ?>
 	<tr>
-		<td nowrap="nowrap" width="250"><div align="right">Regrabable:</div></td>
-        <td><input name="regr" type="checkbox" id="regr" <?php echo $chek; ?> value="<?php echo $row['rewrite'];?>" /></td>
+		<td class="label">Regrabable:</td>
+		<td><input name="regr" type="checkbox" id="regr" <?php echo $chek; ?> value="<?php echo $row['rewrite'];?>" /></td>
 	</tr>
 <?php 
 	} 
 ?>
 	<tr>
-		<td nowrap="nowrap"><div align="right">Precio Unitario:</div></td>
-	    <td><input name="price_unit" type="text" class="text_area" id="price_unit" value="<?php echo $row['price_unit']; ?>" size="25" />
-          <span class="obligatorio">*</span></td>
+		<td class="label">Precio Unitario:</td>
+		<td><input name="price_unit" type="text" id="price_unit" value="<?php echo $row['price_unit']; ?>" size="25" /> <span class="mandatory">*</span></td>
 	</tr>
 	<tr>
-		<td nowrap="nowrap"><div align="right">Precio Paquete:</div></td>
-		<td><input name="price_paq" type="text" class="text_area" id="price_paq" value="<?php echo $row['price_paq']; ?>" size="25" />
-          <span class="obligatorio">*</span></td>
+		<td class="label">Precio Paquete:</td>
+		<td><input name="price_paq" type="text" id="price_paq" value="<?php echo $row['price_paq']; ?>" size="25" /> <span class="mandatory">*</span></td>
 	</tr>
 	<tr>
-		<td nowrap="nowrap"><div align="right">Precio Caja:</div></td>
-		<td><input name="price_box" type="text" class="text_area" id="price_box" value="<?php echo $row['price_box']; ?>" size="25" /> <span class="obligatorio">*</span></td>
+		<td class="label">Precio Caja:</td>
+		<td><input name="price_box" type="text" id="price_box" value="<?php echo $row['price_box']; ?>" size="25" /> <span class="obligatorio">*</span></td>
 	</tr>
 	<tr>
-		<td nowrap="nowrap" width="162"><div align="right">Stock M&iacute;nimo:</div></td>
-		<td><input name="stockmin" type="text" class="text_area" id="stockmin" value="<?php echo $row['stock_min']; ?>" size="25"></td>
+		<td class="label">Stock M&iacute;nimo:</td>
+		<td><input name="stockmin" type="text" id="stockmin" value="<?php echo $row['stock_min']; ?>" size="25"></td>
 	</tr>
 <?php 
 	if($_GET['item'])
@@ -212,9 +153,9 @@ if($titem=="multiple"){
 	if($titem=="normal"){
 ?>
 	<tr>
-		<td><div align="right">Para:</div></td>
+		<td class="label">Para:</td>
 		<td>
-			<select name="spara" id="spara" style="width:250px;" class="text_area">
+			<select name="spara" id="spara">
 		    <option value=""></option>
 <?php  
 		$resc = $db->query("Select name from dvd_for");
@@ -229,9 +170,9 @@ if($titem=="multiple"){
 		</td>
 	</tr>
 	<tr>
-		<td><div align="right">Tipo Estuche:</div></td>
+		<td class="label">Tipo Estuche:</td>
 		<td>
-			<select name="tstch" id="tstch" style="width:250px;" class="text_area">
+			<select name="tstch" id="tstch">
 			<option value=""></option>
 <?php 
 		$resc=$db->query("Select name from dvd_type_stch");
@@ -252,10 +193,10 @@ if($titem=="multiple"){
 	if($titem=="multiple"){
 ?>
 	<tr>
-		<td><div align="right">Velocidad:</div></td>
+		<td class="label">Velocidad:</td>
 		<td>
-			<select name="velocity" id="velocity" style="width:250px;" class="text_area">
-		    <option value=""></option>
+			<select name="velocity" id="velocity">
+			<option value=""></option>
 <?php 
 		$resc = $db->query("Select name from dvd_velocity");
 		
@@ -269,13 +210,13 @@ if($titem=="multiple"){
 		</td>
 	</tr>
 	<tr>
-		<td><div align="right">Paquete:</div></td>
+		<td class="label">Paquete:</td>
 		<td>
-			<select name="paquete" id="paquete" style="width:250px;" class="text_area">
+			<select name="paquete" id="paquete">
 			<option value=""></option>
 <?php  
 		$slc="selected='selected'"; 
-	    $resc=$db->query("Select name from dvd_paquete");
+		$resc=$db->query("Select name from dvd_paquete");
 		
 		while($rowc=$db->getRow($resc, 0)){
 ?>
@@ -287,9 +228,9 @@ if($titem=="multiple"){
 		</td>
 	</tr>
 	<tr>
-		<td><div align="right">Envase:</div></td>
+		<td class="label">Envase:</td>
 		<td>
-			<select name="envase" id="envase" style="width:250px;" class="text_area">
+			<select name="envase" id="envase">
 			<option value=""></option>
 <?php
 		$resc = $db->query("Select name from dvd_envase order by name");
@@ -309,9 +250,9 @@ if($titem=="multiple"){
 	if(($titem=='multiple')/*||($titem=="normal")*/){
 ?>
 	<tr>
-		<td><div align="right">Capacidad:</div></td>
+		<td class="label">Capacidad:</td>
 		<td>
-			<select name="capacidad" id="capacidad" style="width:250px;" class="text_area">
+			<select name="capacidad" id="capacidad">
 			<option value=""></option>
 <?php
 		$resc=$db->query("Select name from dvd_capacity order by name");
@@ -329,31 +270,22 @@ if($titem=="multiple"){
 	} 
 ?>
 	   <tr>
-		<td valign="top"><div align="right">Observaciones:</div></td>
-		<td><textarea id="notas" class="text_area" rows="3" cols="43" name="notas"><?php echo $row['description']; ?></textarea></td>
+		<td class="label">Observaciones:</td>
+		<td><textarea id="notas" rows="3" cols="43" name="notas"><?php echo $row['description']; ?></textarea></td>
 	  </tr>
 	  
 	  <tr>
-        <td width="162" valign="top" nowrap="nowrap"><div align="right">Imagen:</div></td>
-        <td colspan="2"><input name="upload" type="file" class="text_area" id="upload" size="60">
-          &nbsp;&nbsp;&nbsp;&nbsp;Tamaño Max : 10M</td>
-      </tr>
-	  
-	
-      <tr>
-        <td colspan="3"><br>
-          <input name="option" value="{FORM_OPTION}" type="hidden">
-		  <input name="old_passwd" type="hidden" id="old_passwd" value="{FORM_OLD_PASSWD}">
-          <input name="section" value="{FORM_SECTION}" type="hidden">
-          <input name="task" value="" type="hidden">
-		  <input name="userid" id="userid" value="admin" type="hidden">
-          <input name="iditem" type="hidden" id="iditem" value="<?php echo $row['id']; ?>">
-          <input name="dirPath" type="hidden" id="dirPath" value="{FORM_DIR_PATH}">
-          <input name="hidemainmenu" value="{FORM_HIDE_MAIN_MENU}" type="hidden"></td>
+        <td class="label">Imagen:</td>
+        <td colspan="2"><input name="upload" type="file" id="upload" size="60"> Tamaño Max : 2M</td>
       </tr>
     </tbody>
   </table>
+  
+  <input name="option" value="{FORM_OPTION}" type="hidden">
+	<input name="section" value="{FORM_SECTION}" type="hidden">
+   <input name="task" value="" type="hidden">
+   <input name="iditem" type="hidden" id="iditem" value="<?php echo $row['id']; ?>">
+   <input name="dirPath" type="hidden" id="dirPath" value="{FORM_DIR_PATH}">
+   <input name="hidemainmenu" value="{FORM_HIDE_MAIN_MENU}" type="hidden">
 </form>
-<!-- end form_users_edit.inc.htm -->
-  </div>
-</div>
+

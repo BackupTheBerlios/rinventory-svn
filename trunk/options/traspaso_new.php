@@ -1,3 +1,4 @@
+<p class="form-title">Traspasos</p>
 <?php
 require_once 'inc/class.store.php';
 
@@ -18,22 +19,19 @@ if (isset($_POST['data_row'])){
 }
 
 ?>
-<p class="form-title">Traspasos</p>
-		
-
-		<form action="index.php" method="GET">
-			<input type="hidden" name="pages" value="traspaso_new"/>
-			Ver lotes por almacen:
-			<select name="storeid">
-			<option value="">- Todos -</option>
+<form action="index.php" method="GET">
+	<input type="hidden" name="pages" value="traspaso_new"/>
+	Ver lotes por almacen:
+	<select name="storeid">
+	<option value="">- Todos -</option>
 <?php 
 foreach($stores as $store){
-	echo "<option value=\"{$store['id']}\"". (isset($_GET['storeid']) && $_GET['storeid']==$store['id'] ? " selected=\"selected\"" : "") . ">{$store['name']}</option>";
+	echo "<option value='$store->id'". (isset($_GET['storeid']) && $_GET['storeid']==$store->id ? " selected=\"selected\"" : "") . ">$store->name</option>";
 }
 ?>
-			</select>
-			<input type="submit" value="Aceptar"/>
-		</form>
+	</select>
+	<input type="submit" value="Aceptar"/>
+</form>
 		
 <form action="" method="POST" id="main_form">
 	<table class="default" id="main_table">
@@ -55,14 +53,14 @@ $res = $db->query("SELECT l.id, ".
 	"d.name store, ".
 	"i.material, ".
 	"l.stock ".
-	"FROM ".TBL_LOT." l INNER JOIN ".TBL_ITEM." i ON l.name=i.id INNER JOIN ".TBL_DEPARTMENT." d ON d.id=l.idalmacen ".
+	"FROM ".TBL_LOT." l INNER JOIN ".TBL_ITEM." i ON l.itemid=i.id INNER JOIN ".TBL_DEPARTMENT." d ON d.id=l.idalmacen ".
 	"WHERE l.stock>0 AND l.active=1 ".
 	($storeid ? "AND d.id=$storeid" : ""));
 
 $sw=0;
 $cnt=1;
 
-while($row = $db->getRow($res, 0)) {	
+while($row = $db->getRow($res)) {
 ?>
 			
 			<tr class="row<?php echo $sw;?>">
@@ -77,8 +75,8 @@ while($row = $db->getRow($res, 0)) {
 					<option value="">-Sin Cambio-</option>
 <?php
 	foreach($stores as $store){
-		if ($store['id'] != $row['storeid'])
-			echo "<option value=\"{$store['id']}\">{$store['name']}</option>";
+		if ($store->id != $row['storeid'])
+			echo "<option value=\"$store->id\">$store->name</option>";
 }
 ?>
 					</select>
@@ -96,7 +94,7 @@ while($row = $db->getRow($res, 0)) {
 <?php
 $res = $db->query("SELECT dl.idalmacen, ".
 	"SUM(dl.stock) stock ".
-	"FROM ".TBL_LOT." dl INNER JOIN ".TBL_ITEM." di ON dl.name=di.id ".
+	"FROM ".TBL_LOT." dl INNER JOIN ".TBL_ITEM." di ON dl.itemid=di.id ".
 	"WHERE dl.active=1 ".	
 	($storeid ? "AND dl.idalmacen=$storeid " : "").
 	"GROUP BY dl.idalmacen");

@@ -60,8 +60,14 @@ echo '<div id="doc3" class="yui-t7">';
 					</ul>
 				</li>
 				<?php }?>
-				<li><a href="index.php?pages=cliente_list">Clientes</a></li>
-				<li><a href="index.php?pages=venta_new">Ventas</a></li>
+				<!-- <li><a href="index.php?pages=cliente_list">Clientes</a></li> -->
+				<li><a href="#">Ventas</a>
+					<ul>
+					<li><a href="index.php?pages=sell_new">Nuevo</a></li>
+					<li><a href="index.php?pages=sell_list">Listado</a></li>
+					<li><a href="index.php?pages=sell_outstanding">Por Cobrar</a></li>
+					</ul>
+				</li>
 				<li><a href="process_login.php">Salir</a></li>
 			</ul>
 		</div>

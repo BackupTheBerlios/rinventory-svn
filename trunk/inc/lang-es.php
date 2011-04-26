@@ -14,4 +14,7 @@ $PURCHASE_STATUS = array(
 	PURCHASE_STATUS_INTRANSIT => 'En Transito', 
 	PURCHASE_STATUS_DELIVERED => 'Entregado',
 	PURCHASE_STATUS_CANCELED => 'Cancelado');
+$PAYMENT_TYPE = array(
+	PAYMENT_TYPE_CASH => 'Contado',
+	PAYMENT_TYPE_CREDIT => 'Credito');
 ?>
