@@ -18,4 +18,8 @@ $PURCHASE_STATUS = array(
 $PAYMENT_TYPE = array(
 	PAYMENT_TYPE_CASH => 'Contado',
 	PAYMENT_TYPE_CREDIT => 'Credito');
+$UNIT_TYPE = array(
+	UNIT_TYPE_BOX => 'Caja',
+	UNIT_TYPE_PACKAGE => 'Paquete',
+	UNIT_TYPE_UNIT => 'Unidad');
 ?>

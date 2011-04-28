@@ -86,5 +86,8 @@ define('PURCHASE_STATUS_INTRANSIT', 3);
 define('PURCHASE_STATUS_DELIVERED', 4);
 define('PAYMENT_TYPE_CASH', 1);
 define('PAYMENT_TYPE_CREDIT', 2);
+define('UNIT_TYPE_UNIT', 'u');
+define('UNIT_TYPE_BOX', 'b');
+define('UNIT_TYPE_PACKAGE', 'p');
 
 ?>

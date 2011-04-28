@@ -6,11 +6,12 @@ class Queries{
 	/**
 	 * Returns stock of items per store
 	 */
-	public static function getStock($storeid){
+	public static function getStock($storeid, $sortField = '', $sortOrder = '', $limit = 10){
 		$db = Database::getInstance();
 		$array = array();
+		$sortSql = $sortField ? "ORDER BY $sortField $sortOrder" : "";
 		$sql = "SELECT l.itemid, SUM(l.stock) stock FROM ".TBL_LOT." l WHERE l.active=1 AND l.idalmacen=$storeid GROUP BY l.itemid";
-		$sql = "SELECT i.id, i.v_descr name, i.link_type_item type, ls.stock, i.stock_min FROM ".TBL_ITEM." i INNER JOIN ($sql) ls ON i.id=ls.itemid";
+		$sql = "SELECT i.id, i.v_descr name, i.link_type_item type, ls.stock, i.stock_min FROM ".TBL_ITEM." i INNER JOIN ($sql) ls ON i.id=ls.itemid $sortSql LIMIT $limit";
 		$res = $db->query($sql);
 		
 		if (!$res)

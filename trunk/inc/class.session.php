@@ -2,18 +2,17 @@
 require_once 'inc/class.login.php';
 require_once 'inc/class.form.php';
 
-class Session
-{
+class Session {
 	private static $_instance;
-   public $username;     //Username given on sign-up
-   public $userid;       //Random value generated on current login
-   public $uniqueid;				
-   public $userlevel;    //The level to which the user pertains
-   public $time;         //Time user was last active (page loaded)
-   public $logged_in;    //True if user is logged in, false otherwise
-   public $userinfo = array();  //The array holding all user info
-   public $url;          //The page url current being viewed
-   public $referrer;     //Last recorded site page viewed
+	public $username;     //Username given on sign-up
+	public $userid;       //Random value generated on current login
+	public $uniqueid;				
+	public $userlevel;    //The level to which the user pertains
+	public $time;         //Time user was last active (page loaded)
+	public $logged_in;    //True if user is logged in, false otherwise
+	public $userinfo = array();  //The array holding all user info
+	public $url;          //The page url current being viewed
+	public $referrer;     //Last recorded site page viewed
 
 	/**
 	 * Constructor

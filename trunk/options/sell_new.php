@@ -131,7 +131,11 @@ jQuery(document).ready(function(){
 				'<td class="row-counter">&nbsp;</td>'+
 				'<td><input type="hidden" name="lot[]" value="' + ITEMS[i]['lotid'] + '"/>' + ITEMS[i]['name'] + '</td>' +
 				'<td class="number">'+
-					'<select><option value="price_unit">Unidad</option><option value="price_pack" disabled="disabled">Paquete</option><option value="price_box" disabled="disabled">Caja</option></select>'+
+					'<select name="unit_type[]">'+
+					'<option value="<?php echo UNIT_TYPE_UNIT;?>">Unidad</option>'+
+					'<option value="<?php echo UNIT_TYPE_PACKAGE;?>" disabled="disabled">Paquete</option>'+
+					'<option value="<?php echo UNIT_TYPE_BOX;?>">Caja</option>'+
+					'</select>'+
 					'<input type="text" name="price[]" size="9" value="' + ITEMS[i]['price_unit'] + '"/>'+
 				'</td>'+
 				'<td class="number"><input type="text" value="0" name="quantity[]" size="9"/></td>'+

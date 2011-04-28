@@ -2,10 +2,7 @@
 require_once 'inc/class.mysqli.php';
 
 $db = Database::getInstance();
-?>
-<!-- <a class="toolbar" href="javascript:if(jQuery('#name').val()==''){alert('Por favor ingrese el nombre');} else if(jQuery('#stockmin').val()==''){alert('Por favor ingrese el Stock Mínimo');} else{ showMainMenu();submitbutton('save');}" onclick=""> <img src="img/sweb/save_f2.png" alt="Activo" name="active" align="middle" border="0"/> <br> Guardar </a> -->
 
-<?php
 if(isset($_GET['item']))
 	$titem=$_GET['item'];
 ?>
@@ -280,12 +277,48 @@ if($titem=="multiple"){
       </tr>
     </tbody>
   </table>
-  
-  <input name="option" value="{FORM_OPTION}" type="hidden">
+	<br />
+	<input name="option" value="{FORM_OPTION}" type="hidden">
 	<input name="section" value="{FORM_SECTION}" type="hidden">
-   <input name="task" value="" type="hidden">
-   <input name="iditem" type="hidden" id="iditem" value="<?php echo $row['id']; ?>">
-   <input name="dirPath" type="hidden" id="dirPath" value="{FORM_DIR_PATH}">
-   <input name="hidemainmenu" value="{FORM_HIDE_MAIN_MENU}" type="hidden">
+	<input name="task" value="" type="hidden">
+	<input name="iditem" type="hidden" id="iditem" value="<?php echo $row['id']; ?>">
+	<input name="dirPath" type="hidden" id="dirPath" value="{FORM_DIR_PATH}">
+	<input name="hidemainmenu" value="{FORM_HIDE_MAIN_MENU}" type="hidden">
+	<button id="save">Guardar</button>
 </form>
+<div id="dialog_error"><div class="error-list"></div></div>
+<script type="text/javascript">
+jQuery(document).ready(function(){
+	jQuery('#save').button({
+		icons:{primary: 'ui-icon-disk'}
+	}).click(function(){
+		if (checkData()){
+			jQuery('#dialog_error .error-list').html('<?php echo ICON_ALERT;?>' + error);
+			jQuery('#dialog_error').dialog('open');
+			return false;
+		}
+	});
+	jQuery('#dialog_error').dialog({
+		autoOpen: false,
+		modal: true,
+		title: '<?php echo ERROR_TITLE; ?>',
+		buttons: {
+			'Aceptar': function(){jQuery(this).dialog("close")}
+		}
+	});
+})
+
+function checkData(){
+	var error = '';
+
+	if(!jQuery('#name').val())
+		error += '<li>Por favor ingrese el Nombre</li>';
+
+	if(!jQuery('#stockmin').val())
+		error += '<li>Por favor ingrese el Stock M&iacute;nimo</li>';
+
+	if (error)
+		return '<ul>' + error + '</ul>';
+}
+</script>
 

@@ -1,5 +1,5 @@
 <?php
-require 'inc/class.session.php';
+require_once 'inc/class.session.php';
 require_once 'inc/class.mysqli.php';
 
 $session = Session::getInstance();

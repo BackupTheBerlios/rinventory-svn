@@ -113,12 +113,13 @@ class SellDetail{
 	public $description;
 	public $price;
 	public $quantity;
+	public $unit;
 	public $lotid;
 	
 	public static function getAll($sellid){
 		$db = Database::getInstance();
 		$array = array();
-		$sql = "SELECT line,description,quantity,price FROM ".TBL_SELL_DETAIL." WHERE sellid=$sellid";
+		$sql = "SELECT line,description,quantity,price,unit_type unit FROM ".TBL_SELL_DETAIL." WHERE sellid=$sellid";
 		$res = $db->query($sql);
 		
 		if (!$res)
@@ -131,6 +132,7 @@ class SellDetail{
 			$detail->line = $row['line'];
 			$detail->description = 	$row['description'];
 			$detail->price = $row['price'];
+			$detail->unit = $row['unit'];
 			$detail->quantity = $row['quantity'];
 			$array[] = $detail;
 			$row = $db->getRow($res);
@@ -216,7 +218,7 @@ class Sell{
 				continue;
 
 			// Check available stock 
-			$sql = "SELECT stock FROM ".TBL_LOT." WHERE id=$detail->lotid";
+			$sql = "SELECT stock,unidades units_per_box FROM ".TBL_LOT." WHERE id=$detail->lotid";
 			$res = $db->query($sql);
 			
 			if (!$res){
@@ -233,8 +235,12 @@ class Sell{
 			}
 			
 			$row = $db->getRow($res);
+			$quantity = $detail->quantity;
 			
-			if ($row['stock'] < $detail->quantity){
+			if ($detail->unit == UNIT_TYPE_BOX)
+				$quantity = $detail->quantity*$row['units_per_box'];
+				
+			if ($row['stock'] < $quantity){
 				$db->dispose($res);
 				$db->rollback();
 				$log->addError("Stock insuficiente en lote $detail->lotid.");
@@ -242,7 +248,7 @@ class Sell{
 			}
 
 			// Update stock for lot
-			$sql = "UPDATE ".TBL_LOT." SET stock=stock-$detail->quantity WHERE id=$detail->lotid";
+			$sql = "UPDATE ".TBL_LOT." SET stock=stock-$quantity WHERE id=$detail->lotid";
 			$res = $db->query($sql);
 			
 			if (!$res){
@@ -254,9 +260,9 @@ class Sell{
 			// Insert detail
 			$item = Item::getFromLot($detail->lotid);
 			$detail->description = $item->name;	
-			$sql = "INSERT INTO ".TBL_SELL_DETAIL." (sellid,line,description,quantity,price)".
+			$sql = "INSERT INTO ".TBL_SELL_DETAIL." (sellid,line,description,quantity,price,unit_type)".
 				" VALUES ".
-				"($sellid,$detail->line,'$detail->description',$detail->quantity,$detail->price)";
+				"($sellid,$detail->line,'$detail->description',$detail->quantity,$detail->price,'$detail->unit')";
 			
 			$res = $db->query($sql);
 			
