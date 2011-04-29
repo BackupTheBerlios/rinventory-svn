@@ -8,6 +8,7 @@ function sell_add(){
 	$lots = isset($_POST['lot']) && is_array($_POST['lot']) ? $_POST['lot'] : false;
 	$prices = isset($_POST['price']) && is_array($_POST['price']) ? $_POST['price'] : false;
 	$quantity = isset($_POST['quantity']) && is_array($_POST['quantity']) ? $_POST['quantity'] : false;
+	$unit_types = isset($_POST['unit_type']) ? $_POST['unit_type'] : '';
 	
 	 
 	if (!$session->checkLogin())
@@ -19,6 +20,7 @@ function sell_add(){
 		$detail->price = $prices[$i];
 		$detail->quantity = $quantity[$i];
 		$detail->lotid = $lots[$i];
+		$detail->unit = $unit_types[$i]; 
 		$sell->detail[] = $detail;
 	}
 	

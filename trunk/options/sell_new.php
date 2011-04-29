@@ -35,7 +35,7 @@ include 'inc/widget/error.php';
 	<table class="form">
 	<tr>
 		<td class="label" style="width:9em">Fecha:</td>
-		<td><input name="date" type="text" id="fecha" value="" size="16"> <span class="mandatory">*</span></td>
+		<td><input name="date" type="text" id="fecha" value="" size="16" readonly="readonly"> <span class="mandatory">*</span></td>
 	</tr>
 	<tr>
 		<td class="label">Cliente:</td>
@@ -136,7 +136,7 @@ jQuery(document).ready(function(){
 					'<option value="<?php echo UNIT_TYPE_PACKAGE;?>" disabled="disabled">Paquete</option>'+
 					'<option value="<?php echo UNIT_TYPE_BOX;?>">Caja</option>'+
 					'</select>'+
-					'<input type="text" name="price[]" size="9" value="' + ITEMS[i]['price_unit'] + '"/>'+
+					'<input type="text" name="price[]" size="9" readonly="readonly" value="' + ITEMS[i]['price_unit'] + '"/>'+
 				'</td>'+
 				'<td class="number"><input type="text" value="0" name="quantity[]" size="9"/></td>'+
 				'<td class="number line-total">&nbsp</td>'+
@@ -152,7 +152,15 @@ jQuery(document).ready(function(){
 		setupInputIntegerByObj(lastTr.find('input[name^="quantity"]'));
 
 		lastTr.find('select').change(function(){
-			lastTr.find('input[name^="price"]').val(ITEMS[i][this.value]);
+			var input = lastTr.find('input[name^="price"]');
+
+			if (this.value == '<?php echo UNIT_TYPE_BOX;?>')
+				input.val(ITEMS[i]['price_box']);
+			else if (this.value == '<?php echo UNIT_TYPE_PACKAGE;?>')
+				input.val(ITEMS[i]['price_pack']);
+			else
+				input.val(ITEMS[i]['price_unit']);
+			
 			calcTotal();
 		});
 		
@@ -266,12 +274,19 @@ function calcStock(){
 	
 	jQuery('#detail tbody input:checkbox').each(function(){
 		var qty = jQuery(this).closest('tr').find('input[name^=quantity]').val();
+		var unitType = jQuery(this).closest('tr').find('select[name^=unit_type]').val();
 
 		qty = Number(qty);
+
 		
 		if (!qty)
 			qty = 0;
 
+		if (unitType == '<?php echo UNIT_TYPE_BOX?>')
+			qty = qty*ITEMS[this.value]['units_box'];
+		//else if (unitType == '<?php echo UNIT_TYPE_PACKAGE?>')
+		//	TODO
+		
 		ITEMS[this.value]['stock_to_sell'] += qty;
 	});
 }

@@ -236,9 +236,15 @@ class Sell{
 			
 			$row = $db->getRow($res);
 			$quantity = $detail->quantity;
+			$units = 1;
 			
-			if ($detail->unit == UNIT_TYPE_BOX)
-				$quantity = $detail->quantity*$row['units_per_box'];
+			if ($detail->unit == UNIT_TYPE_BOX){
+				$units = $row['units_per_box'];
+				$quantity = $detail->quantity*$units;
+			}
+			else if ($detail->unit == UNIT_TYPE_PACKAGE){
+				// TODO
+			}
 				
 			if ($row['stock'] < $quantity){
 				$db->dispose($res);
@@ -260,9 +266,9 @@ class Sell{
 			// Insert detail
 			$item = Item::getFromLot($detail->lotid);
 			$detail->description = $item->name;	
-			$sql = "INSERT INTO ".TBL_SELL_DETAIL." (sellid,line,description,quantity,price,unit_type)".
+			$sql = "INSERT INTO ".TBL_SELL_DETAIL." (sellid,line,description,quantity,price,unit_type,units)".
 				" VALUES ".
-				"($sellid,$detail->line,'$detail->description',$detail->quantity,$detail->price,'$detail->unit')";
+				"($sellid,$detail->line,'$detail->description',$detail->quantity,$detail->price,'$detail->unit',$units)";
 			
 			$res = $db->query($sql);
 			
