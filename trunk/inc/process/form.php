@@ -5,6 +5,12 @@ function process_form(){
 	$processed = true;
 	
 	switch ($page){
+		case FORM_CUSTOMER_NEW:
+			require 'inc/process/customer.php';
+			customer_add();
+			break;
+		case FORM_CUSTOMER_EDIT:
+			break;
 		case "purchase_new":
 			require 'inc/process/purchase.php';
 			purchase_add();

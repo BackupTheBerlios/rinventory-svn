@@ -60,7 +60,16 @@ echo '<div id="doc3" class="yui-t7">';
 					</ul>
 				</li>
 				<?php }?>
-				<!-- <li><a href="index.php?pages=cliente_list">Clientes</a></li> -->
+				<li><a href="#">Clientes</a>
+					<ul>
+					<?php if (Forms::isAllowed(FORM_CUSTOMER_NEW)){?>
+						<li><a href="<?php echo Forms::getLink(FORM_CUSTOMER_NEW);?>">Nuevo</a></li>
+					<?php }?>
+					<?php if (Forms::isAllowed(FORM_CUSTOMER_LIST)){?>
+						<li><a href="<?php echo Forms::getLink(FORM_CUSTOMER_LIST);?>">Listado</a></li>
+					<?php }?>
+					</ul>
+				</li>
 				<li><a href="#">Ventas</a>
 					<ul>
 					<li><a href="index.php?pages=sell_new">Nuevo</a></li>
