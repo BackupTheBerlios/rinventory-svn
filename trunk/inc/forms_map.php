@@ -1,5 +1,5 @@
 <?php
-define('FORM_CUSTOMER_NEW', 'customer_edit');
+define('FORM_CUSTOMER_NEW', 'customer_new');
 define('FORM_CUSTOMER_EDIT', 'customer_edit');
 define('FORM_CUSTOMER_DETAIL', 'customer_detail');
 define('FORM_CUSTOMER_LIST', 'customer_list');

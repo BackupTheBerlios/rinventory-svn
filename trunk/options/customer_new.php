@@ -34,15 +34,15 @@ include 'inc/widget/error.php';
 	</tr>
 	<tr>
 		<td class="label">Tel&eacute;fono:</td>
-		<td><input name="phone" type="text" id="phone" value="<?php echo $customer->phone;?>" size="60"> <span class="mandatory">*</span></td>
+		<td><input name="phone" type="text" value="<?php echo $customer->phone;?>" size="60"> <span class="mandatory">*</span></td>
 	</tr>
 	<tr>
 		<td class="label">Celular:</td>
-		<td><input name="cell" type="text" id="fax" value="<?php echo $store->fax;?>" size="60"></td>
+		<td><input name="cell" type="text" value="<?php echo $customer->cell;?>" size="60"></td>
 	</tr>
 	<tr>
 		<td class="label">Activo:</td>
-		<td><input type="checkbox" id="active" value="1" <?php echo $customer->active == 1 ? "checked='checked'" : "";?>><input type="hidden" value="<?php echo $customer->active;?>" name="active"/></td>
+		<td><input type="checkbox" id="active" <?php echo $customer->active == 1 ? "checked='checked'" : "";?>><input type="hidden" value="<?php echo $customer->active;?>" name="active"/></td>
 	</tr>
 	<tr>
 		<td class="label">Direcci&oacute;n:</td>
@@ -50,7 +50,7 @@ include 'inc/widget/error.php';
 	</tr>
 	<tr>
 		<td class="label">E-Mail:</td>
-	    <td><input name="email" type="text" id="email" value="<?php echo $store->email;?>" size="60"></td>
+	    <td><input name="email" type="text" id="email" value="<?php echo $customer->email;?>" size="60"></td>
 	</tr>
 	</tbody>
 	</table>

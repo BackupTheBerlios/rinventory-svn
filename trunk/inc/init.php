@@ -8,7 +8,7 @@ define("DB_NAME", "inventario");
 define('TABLE_PREFIX', 'dvd_');
 define('SITE_URL', 'http://localhost/rinventory/');
 
-define('TBL_CUSTOMER', TABLE_PREFIX . 'cliente');
+define('TBL_CUSTOMER', TABLE_PREFIX . 'customer');
 define('TBL_COLOR', TABLE_PREFIX . 'color');
 define('TBL_DEPARTMENT', TABLE_PREFIX . 'departament');
 define('TBL_FOR', TABLE_PREFIX . 'for');

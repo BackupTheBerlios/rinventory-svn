@@ -1,6 +1,8 @@
 <?php
 define('ACTIVE_ON', '<span class="ui-icon ui-icon-check"></span>');
 define('ACTIVE_OFF', '<span class="ui-icon ui-icon-closethick"></span>');
+define('ICON_ACTIVE', '<span class="ui-icon ui-icon-check"></span>');
+define('ICON_INACTIVE', '<span class="ui-icon ui-icon-closethick"></span>');
 define('ICON_INFO', '<span class="ui-icon ui-icon-info"></span>');
 define('ICON_PENCIL', '<span class="ui-icon ui-icon-pencil"></span>');
 define('ICON_ZOOMIN', '<span class="ui-icon ui-icon-zoomin"></span>');

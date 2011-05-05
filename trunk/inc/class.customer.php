@@ -9,6 +9,8 @@ class Customer{
 	public $phone;
 	public $cell;
 	public $nit;
+	public $email;
+	public $active;
 	public $country;
 	public $city;
 	
@@ -19,7 +21,9 @@ class Customer{
 		$this->address = $db->escape(strip_tags($this->address));
 		$this->phone = $db->escape(strip_tags($this->phone));
 		$this->cell = $db->escape(strip_tags($this->cell));
+		$this->email = $db->escape(strip_tags($this->email));
 		$this->nit = $db->escape(strip_tags($this->nit));
+		$this->active = $this->active ? 1 : 0;
 	}
 	
 	/**
@@ -30,7 +34,7 @@ class Customer{
 	public function read($customerid){
 		$log = Log::getInstance();
 		$db = Database::getInstance();
-		$sql = "SELECT name,address,phone,cell,nit FROM ".TBL_CUSTOMER." WHERE id=$customerid";
+		$sql = "SELECT name,address,phone,cell,nit,email,active,date_created,date_modified FROM ".TBL_CUSTOMER." WHERE id=$customerid";
 		$res = $db->query($sql);
 		
 		if (!$res){
@@ -51,6 +55,8 @@ class Customer{
 		$this->phone = $row['phone'];
 		$this->cell = $row['cell'];
 		$this->nit = $row['nit'];
+		$this->email = $row['email'];
+		$this->active = $row['active'];
 		$db->dispose($res);
 		
 		return true;
@@ -68,15 +74,17 @@ class Customer{
 		$sql = "INSERT INTO ".TBL_CUSTOMER." ".
 			"(name,address,".
 			"phone,cell,".
-			"nit)".
+			"nit,active,".
+			"email,date_created,date_modified)".
 			" VALUES ".
 			"('$this->name','$this->address',".
 			"'$this->phone','$this->cell',".
-			"'$this->nit')";
+			"'$this->nit',$this->active,".
+			"'$this->email',NOW(),NOW())";
 		
 		$res = $db->query($sql);
 		
-		if ($res){
+		if (!$res){
 			$log->addError("No se pudo agregar Cliente");
 			return false;
 		}
