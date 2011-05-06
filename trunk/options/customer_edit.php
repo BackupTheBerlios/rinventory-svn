@@ -1,5 +1,8 @@
-<p class="form-title">Cliente</p>
+<p class="form-title">Modificaci&oacute;n de Cliente</p>
 <?php
+if (!Forms::checkPermission(FORM_CUSTOMER_EDIT))
+	return;
+
 require 'inc/class.customer.php';
 require_once 'inc/class.log.php';
 
@@ -7,15 +10,18 @@ $customerid = isset($_GET['customer']) ? $_GET['customer'] : "";
 $log = Log::getInstance();
 $customer = new Customer();
 
-
-if ($customerid != "new" && (!$customerid || !$customer->read($customerid))){
-	$log->addError("");
-}
+if ($customerid)
+	$customer->read($customerid);
+else 
+	$log->addError("Cliente solicitado no es v&aacute;lido.");
 
 include 'inc/widget/error.php';
 
+if (!isset($_POST['page']) && $log->isError())
+	return;
+	
 if (isset($_POST['customerid']) && isset($_POST['page']) && !$log->isError())
-	include 'inc/widget/success.php'
+	include 'inc/widget/success.php';
 ?>
 <form action="" method="post">
 	<table class="form">
@@ -30,15 +36,15 @@ if (isset($_POST['customerid']) && isset($_POST['page']) && !$log->isError())
 	</tr>
 	<tr>
 		<td class="label">Tel&eacute;fono:</td>
-		<td><input name="phone" type="text" id="phone" value="<?php echo $customer->phone;?>" size="60"> <span class="mandatory">*</span></td>
+		<td><input name="phone" type="text" value="<?php echo $customer->phone;?>" size="60"> <span class="mandatory">*</span></td>
 	</tr>
 	<tr>
 		<td class="label">Celular:</td>
-		<td><input name="cell" type="text" id="fax" value="<?php echo $store->fax;?>" size="60"></td>
+		<td><input name="cell" type="text" value="<?php echo $customer->cell;?>" size="60"></td>
 	</tr>
 	<tr>
 		<td class="label">Activo:</td>
-		<td><input name="active" type="checkbox" id="active" value="1" <?php echo $customer->active == 1 ? "checked='checked'" : "";?>></td>
+		<td><input type="checkbox" id="active" <?php echo $customer->active == 1 ? "checked='checked'" : "";?>><input type="hidden" value="<?php echo $customer->active;?>" name="active"/></td>
 	</tr>
 	<tr>
 		<td class="label">Direcci&oacute;n:</td>
@@ -46,12 +52,12 @@ if (isset($_POST['customerid']) && isset($_POST['page']) && !$log->isError())
 	</tr>
 	<tr>
 		<td class="label">E-Mail:</td>
-	    <td><input name="email" type="text" id="email" value="<?php echo $store->email;?>" size="60"></td>
+	    <td><input name="email" type="text" id="email" value="<?php echo $customer->email;?>" size="60"></td>
 	</tr>
 	</tbody>
 	</table>
+	<input type="hidden" name="page" value="<?php echo FORM_CUSTOMER_EDIT;?>"/>
 	<input type="hidden" name="customerid" value="<?php echo $customerid;?>"/>
-	<input type="hidden" name="page" value="customer_edit"/>
 	<br />
 	<button id="save">Guardar</button>
 </form>
@@ -64,7 +70,7 @@ jQuery(document).ready(function(){
 		var error = checkData(); 
 
 		if (error){
-			jQuery('#dialog_error .error-list').html('<span class="ui-icon ui-icon-alert"></span>' + error);
+			jQuery('#dialog_error .error-list').html('<?php echo ICON_ALERT;?>' + error);
 			jQuery('#dialog_error').dialog('open');
 			return false;
 		}
@@ -72,10 +78,13 @@ jQuery(document).ready(function(){
 	jQuery('#dialog_error').dialog({
 		autoOpen: false,
 		modal: true,
-		title: 'Se detectaron Errores!',
+		title: '<?php echo ERROR_TITLE;?>',
 		buttons: {
 			'Aceptar': function(){jQuery(this).dialog("close")}
 		}
+	});
+	jQuery('#active').click(function(){
+		jQuery('input[name="active"]').val(this.checked ? 1 : 0);
 	});
 });
 function checkData(){

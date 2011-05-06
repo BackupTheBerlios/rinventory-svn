@@ -10,6 +10,12 @@ define('FORM_STORE_NEW', 'store_edit');
 require_once 'inc/class.session.php';
 
 class Forms{
+	/**
+	 * 
+	 * Enter description here ...
+	 * @param unknown_type $form
+	 * @param unknown_type $params
+	 */
 	public static function getLink($form, $params=""){
 		$str = "";
 		
@@ -24,6 +30,45 @@ class Forms{
 		return SITE_URL."index.php?pages=$form".$str;
 	}
 	
+	/**
+	 * 
+	 * Enter description here ...
+	 * @param unknown_type $currentSortField
+	 * @param unknown_type $sortField
+	 * @param unknown_type $sortOrder
+	 */
+	public static function getSort($currentSortField, $sortField, $sortOrder){
+		$array = array();
+		
+		$array['sort_by'] = $sortField;
+		
+		if ($currentSortField == $sortField)
+			$array['sort_dir'] = $sortOrder == "d" ? "a" : "d";
+		else 
+			$array['sort_dir'] = "a";
+		
+		return $array;
+	}
+	
+	/**
+	 * 
+	 * Enter description here ...
+	 * @param unknown_type $form
+	 */
+	public static function checkPermission($form){
+		if (!Forms::isAllowed($form)){
+			echo "Acceso Denegado.";
+			return false;
+		}
+		
+		return true;
+	}
+	
+	/**
+	 * 
+	 * Enter description here ...
+	 * @param unknown_type $form
+	 */
 	public static function isAllowed($form){
 		$session = Session::getInstance();
 		

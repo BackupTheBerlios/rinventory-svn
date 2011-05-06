@@ -92,5 +92,118 @@ class Customer{
 		$this->id = $db->lastID();
 		return true;
 	}
+	
+	/**
+	 * 
+	 * Enter description here ...
+	 */
+	public function update(){
+		$log = Log::getInstance();
+		$db = Database::getInstance();		
+		
+		$this->setupSafeInput();
+		$sql = "UPDATE ".TBL_CUSTOMER." SET ".
+			"name='$this->name',".
+			"address='$this->address',".
+			"phone='$this->phone',".
+			"cell='$this->cell',".
+			"nit='$this->nit',".
+			"active=$this->active,".
+			"email='$this->email',".
+			"date_modified=NOW() ".
+			"WHERE id=$this->id";
+		
+		if (!$db->query($sql)){
+			$log->addError("No se pudo actualizar datos de Cliente.");
+			return false;
+		}
+		
+		return true;
+	}
+	
+	/**
+	 * 
+	 * Enter description here ...
+	 * @param unknown_type $field
+	 */
+	public static function isField($field){
+		$field = strtolower($field);
+		
+		switch ($field) {
+			case "name":
+			case "phone":
+			case "address":
+			case "cell":
+			case "active":
+			case "nit":
+			case "email":
+			case "date_modified":
+			case "date_created":
+				return true;
+		}
+		
+		return false;
+	}
+	
+	public static function fieldName($field){
+		switch ($field) {
+			case "name":
+				return "name";
+			case "phone":
+				return "phone";
+			case "address":
+				return "address";
+			case "cell":
+				return "cell";
+			case "active":
+				return "active";
+			case "nit":
+				return "nit";
+			case "email":
+				return "email";
+			case "date_modified":
+				return "date_modified";
+			case "date_created":
+				return "date_created";
+		}
+		
+		return "";
+	}
+	/**
+	 * 
+	 * Enter description here ...
+	 * @param unknown_type $sortField
+	 * @param unknown_type $sortOrder
+	 */
+	public static function getAll($sortField, $sortOrder){
+		$db = Database::getInstance();
+		$sortSql = $sortField ? " ORDER BY $sortField $sortOrder" : "";
+		$sql = "SELECT id,name,address,phone,cell,email,active FROM ".TBL_CUSTOMER.$sortSql;
+		$array = array();
+		$res = $db->query($sql);
+		
+		if (!$res){
+			return $array;
+		}
+		
+		$row = $db->getRow($res);
+		
+		while($row){
+			$customer = new Customer();
+			$customer->id = $row['id'];
+			$customer->name = $row['name'];
+			$customer->address = $row['address'];
+			$customer->phone = $row['phone'];
+			$customer->cell = $row['cell'];
+			$customer->email = $row['email'];
+			$customer->active = $row['active'];
+			$array[] = $customer;
+			$row = $db->getRow($res);	
+		}
+		
+		$db->dispose($res);
+		
+		return $array;
+	}
 }
 ?>

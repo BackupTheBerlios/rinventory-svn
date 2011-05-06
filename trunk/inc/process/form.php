@@ -10,6 +10,8 @@ function process_form(){
 			customer_add();
 			break;
 		case FORM_CUSTOMER_EDIT:
+			require 'inc/process/customer.php';
+			customer_edit();
 			break;
 		case "purchase_new":
 			require 'inc/process/purchase.php';

@@ -1,9 +1,7 @@
-<p class="form-title">Cliente</p>
+<p class="form-title">Nuevo Cliente</p>
 <?php
-if (!Forms::isAllowed(FORM_CUSTOMER_NEW)){
-	echo "Acceso Denegado";
+if (!Forms::checkPermission(FORM_CUSTOMER_NEW))
 	return;
-}
 
 require 'inc/class.customer.php';
 require_once 'inc/class.log.php';
@@ -82,7 +80,7 @@ jQuery(document).ready(function(){
 	});
 	jQuery('#active').click(function(){
 		jQuery('input[name="active"]').val(this.checked ? 1 : 0);
-	})
+	});
 });
 function checkData(){
 	var error = '';
