@@ -1,5 +1,6 @@
 <?php
 require 'inc/class.sell.php';
+require_once 'inc/class.customer.php';
 
 function sell_add(){
 	$db = Database::getInstance();
@@ -9,7 +10,7 @@ function sell_add(){
 	$prices = isset($_POST['price']) && is_array($_POST['price']) ? $_POST['price'] : false;
 	$quantity = isset($_POST['quantity']) && is_array($_POST['quantity']) ? $_POST['quantity'] : false;
 	$unit_types = isset($_POST['unit_type']) ? $_POST['unit_type'] : '';
-	
+	$customerid = isset($_POST['customerid']) && is_numeric($_POST['customerid']) ? $_POST['customerid'] : false; 
 	 
 	if (!$session->checkLogin())
 		return false;
@@ -24,11 +25,23 @@ function sell_add(){
 		$sell->detail[] = $detail;
 	}
 	
+	if ($customerid){
+		$customer = new Customer();
+		
+		if(!$customer->read($customerid))
+			return false;
+		
+		$sell->customer = $customer->name;
+		$sell->nit = $customer->nit;
+	}
+	else{
+		$sell->customer = isset($_POST['customer']) ? $db->escape($_POST['customer']) : "";
+		$sell->nit = isset($_POST['nit']) ? $db->escape($_POST['nit']) : "";
+	}
+		
 	$sell->date =  isset($_POST['date']) ? $_POST['date'] : "";
 	$sell->paymentType = isset($_POST['payment_type']) ? $_POST['payment_type'] : "";
 	$sell->prepayment = isset($_POST['prepayment']) ? $_POST['prepayment'] : 0;
-	$sell->customer = isset($_POST['customer']) ? $db->escape($_POST['customer']) : ""; 
-	$sell->nit = isset($_POST['nit']) ? $db->escape($_POST['nit']) : "";
 	$sell->gloss = isset($_POST['gloss']) ? $db->escape($_POST['gloss']) : "";
 	$sell->storeid = isset($_POST['store']) ? $_POST['store'] : "";
 	

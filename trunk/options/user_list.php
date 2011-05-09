@@ -1,4 +1,8 @@
+<p class="form-title">Usuarios</p>
 <?php
+if (!Forms::checkPermission(FORM_USER_LIST))
+	return;
+	
 require 'inc/class.user.php';
 
 $users = User::getAll();

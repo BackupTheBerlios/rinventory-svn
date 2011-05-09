@@ -3,6 +3,7 @@
 require_once 'inc/class.session.php';
 require_once 'inc/class.store.php';
 require_once 'inc/class.item.php';
+require_once 'inc/class.customer.php';
 
 $session = Session::getInstance();
 $stores = Store::getAllActive("name", "ASC");
@@ -39,7 +40,18 @@ include 'inc/widget/error.php';
 	</tr>
 	<tr>
 		<td class="label">Cliente:</td>
-		<td><input name="customer" type="text" id="cliente" value="" size="30"/> <span class="mandatory">*</span></td>
+		<td>
+			<select name="customerid" id="customerid">
+			<option value="">-Seleccione o Escriba-</option>
+			<?php
+			$customers = Customer::getAllActive(Customer::fieldName("name"), "");
+			
+			foreach ($customers as $customer){
+				echo "<option value='$customer->id'>$customer->name</option>";
+			} 
+			?>
+			</select>
+			<input name="customer" type="text" id="customer" value="" size="30"/> <span class="mandatory">*</span></td>
 	</tr>
 	<tr>
 		<td class="label">NIT Cliente:</td>
@@ -177,10 +189,21 @@ jQuery(document).ready(function(){
 		return false;
 	});
 
+	jQuery('#customerid').change(function(){
+		if (this.value == ''){
+			jQuery('#customer').show();
+			jQuery('#nit').closest('tr').show();
+		}
+		else {
+			jQuery('#customer').hide();
+			jQuery('#nit').closest('tr').hide();
+		}
+	});
+	
 	jQuery('#items_selector').change(function(){
 		updateItemInfo();
 	});
-	
+
 	jQuery('#remove_row').button().click(function(){
 		jQuery('#detail tbody input:checked').each(function(){
 			jQuery(this).closest('tr').remove();
@@ -325,8 +348,13 @@ function checkData(){
 	if (!jQuery('input[name="date"]').val())
 		error += '<li>Debe introducir Fecha.</li>';
 
-	if (!jQuery('input[name="customer"]').val())
-		error += '<li>Debe introducir Cliente.</li>';
+	if (jQuery('#customerid').val() == ''){
+		if (!jQuery('input[name="customer"]').val())
+			error += '<li>Debe introducir Cliente.</li>';
+	}
+
+	if (jQuery('#detail tbody tr').length == 0)
+		error += '<li>Debe introducir detalle de Venta.</li>';
 
 	for (var i in ITEMS){
 		if (ITEMS[i]['stock'] < ITEMS[i]['stock_to_sell'])

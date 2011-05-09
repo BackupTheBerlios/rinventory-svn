@@ -4,7 +4,17 @@ define('FORM_CUSTOMER_EDIT', 'customer_edit');
 define('FORM_CUSTOMER_DETAIL', 'customer_detail');
 define('FORM_CUSTOMER_LIST', 'customer_list');
 
-define('FORM_STORE_NEW', 'store_edit');
+define('FORM_USER_NEW', 'user_new');
+define('FORM_USER_EDIT', 'user_edit');
+define('FORM_USER_LIST', 'user_list');
+define('FORM_USER_DETAIL', 'user_detail');
+
+define('FORM_SELL_NEW', 'sell_new');
+define('FORM_SELL_EDIT', 'sell_edit');
+define('FORM_SELL_LIST', 'sell_list');
+define('FORM_SELL_DETAIL', 'sell_detail');
+define('FORM_SELL_OUTSTANDING', 'sell_outstanding');
+
 define('FORM_STORE_NEW', 'store_edit');
 
 require_once 'inc/class.session.php';

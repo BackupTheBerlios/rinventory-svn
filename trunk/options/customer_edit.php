@@ -3,7 +3,7 @@
 if (!Forms::checkPermission(FORM_CUSTOMER_EDIT))
 	return;
 
-require 'inc/class.customer.php';
+require_once 'inc/class.customer.php';
 require_once 'inc/class.log.php';
 
 $customerid = isset($_GET['customer']) ? $_GET['customer'] : "";
@@ -28,19 +28,19 @@ if (isset($_POST['customerid']) && isset($_POST['page']) && !$log->isError())
 	<tbody>
 	<tr>
 		<td class="label">Nombre:</td>
-		<td><input name="name" type="text" id="name" value="<?php echo $customer->name;?>" size="60"> <span class="mandatory">*</span></td>
+		<td><input name="name" type="text" id="name" value="<?php echo $customer->name;?>" size="60"/> <span class="mandatory">*</span></td>
 	</tr>
 	<tr>
 		<td class="label">NIT:</td>
-		<td><input name="nit" type="text" id="nit" value="<?php echo $customer->nit;?>" size="60"> <span class="mandatory">*</span></td>
+		<td><input name="nit" type="text" id="nit" value="<?php echo $customer->nit;?>" size="60"/> <span class="mandatory">*</span></td>
 	</tr>
 	<tr>
 		<td class="label">Tel&eacute;fono:</td>
-		<td><input name="phone" type="text" value="<?php echo $customer->phone;?>" size="60"> <span class="mandatory">*</span></td>
+		<td><input name="phone" type="text" value="<?php echo $customer->phone;?>" size="60"/> <span class="mandatory">*</span></td>
 	</tr>
 	<tr>
 		<td class="label">Celular:</td>
-		<td><input name="cell" type="text" value="<?php echo $customer->cell;?>" size="60"></td>
+		<td><input name="cell" type="text" value="<?php echo $customer->cell;?>" size="60"/></td>
 	</tr>
 	<tr>
 		<td class="label">Activo:</td>
@@ -48,11 +48,11 @@ if (isset($_POST['customerid']) && isset($_POST['page']) && !$log->isError())
 	</tr>
 	<tr>
 		<td class="label">Direcci&oacute;n:</td>
-		<td><input name="address" type="text" id="address" value="<?php echo $customer->address;?>" size="60"> </td>
+		<td><input name="address" type="text" id="address" value="<?php echo $customer->address;?>" size="60"/> </td>
 	</tr>
 	<tr>
 		<td class="label">E-Mail:</td>
-	    <td><input name="email" type="text" id="email" value="<?php echo $customer->email;?>" size="60"></td>
+	    <td><input name="email" type="text" id="email" value="<?php echo $customer->email;?>" size="60"/></td>
 	</tr>
 	</tbody>
 	</table>

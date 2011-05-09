@@ -52,14 +52,16 @@ echo '<div id="doc3" class="yui-t7">';
 					</ul>
 				</li>
 				<li><a href="index.php?pages=traspaso_new">Traspasos</a></li>
-				<?php if ($session->userlevel >= ADMIN_LEVEL) { ?>
 				<li><a href="#">Usuario</a>
 					<ul>
-					<li><a href="index.php?pages=user_new">Nuevo</a></li>
-					<li><a href="index.php?pages=user_list">Lista</a></li>
+					<?php if (Forms::isAllowed(FORM_USER_NEW)){ ?>
+					<li><a href="<?php echo Forms::getLink(FORM_USER_NEW);?>">Nuevo</a></li>
+					<?php } ?>
+					<?php if (Forms::isAllowed(FORM_USER_LIST)){ ?>
+					<li><a href="<?php echo Forms::getLink(FORM_USER_LIST);?>">Lista</a></li>
+					<?php } ?>
 					</ul>
 				</li>
-				<?php }?>
 				<li><a href="#">Clientes</a>
 					<ul>
 					<?php if (Forms::isAllowed(FORM_CUSTOMER_NEW)){?>

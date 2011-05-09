@@ -1,5 +1,9 @@
+<p class="form-title">Registro de Nuevo Usuario</p>
 <?php
-require 'inc/class.store.php'; 
+if(!Forms::checkPermission(FORM_USER_NEW))
+	return;
+	
+require_once 'inc/class.store.php'; 
 
 $stores = Store::getAllActive("name", "ASC");
 $firstname = isset($_POST['firstname']) ? $_POST['firstname'] : "";
@@ -16,9 +20,9 @@ $active = true;
 
 if (isset($_POST['page']))
 	$active = isset($_POST['active']);
+
+include 'inc/widget/error.php';
 ?>
-<p class="form-title">Registro de Nuevo Usuario</p>
-<?php include 'inc/widget/error.php';?>
 <form action="" method="POST" enctype="multipart/form-data">
 	<table class="form">
 	<tbody>

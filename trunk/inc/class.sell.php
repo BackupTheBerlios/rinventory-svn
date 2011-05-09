@@ -214,8 +214,8 @@ class Sell{
 		}
 		
 		foreach($this->detail as $detail){
-			if (!$detail->quantity || !$detail->price)
-				continue;
+			//if (!$detail->quantity || !$detail->price)
+			//	continue;
 
 			// Check available stock 
 			$sql = "SELECT stock,unidades units_per_box FROM ".TBL_LOT." WHERE id=$detail->lotid";

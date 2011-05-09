@@ -26,19 +26,19 @@ if(!$log->isError()){
 <tbody>
 <tr>
 	<td class="label">Nombre:</td>
-	<td><?php echo htmlentities($customer->name);?></td>
+	<td><?php echo $customer->name;?></td>
 </tr>
 <tr>
 	<td class="label">NIT:</td>
-	<td><?php echo htmlentities($customer->nit);?></td>
+	<td><?php echo $customer->nit;?></td>
 </tr>
 <tr>
 	<td class="label">Tel&eacute;fono:</td>
-	<td><?php echo htmlentities($customer->phone);?></td>
+	<td><?php echo $customer->phone;?></td>
 </tr>
 <tr>
 	<td class="label">Celular:</td>
-	<td><?php echo htmlentities($customer->cell);?></td>
+	<td><?php echo $customer->cell;?></td>
 </tr>
 <tr>
 	<td class="label">Activo:</td>
@@ -46,11 +46,11 @@ if(!$log->isError()){
 </tr>
 <tr>
 	<td class="label">Direcci&oacute;n:</td>
-	<td><?php echo htmlentities($customer->address);?></td>
+	<td><?php echo $customer->address;?></td>
 </tr>
 <tr>
 	<td class="label">E-Mail:</td>
-    <td><?php echo htmlentities($store->email);?></td>
+    <td><?php echo $customer->email;?></td>
 </tr>
 </tbody>
 </table>

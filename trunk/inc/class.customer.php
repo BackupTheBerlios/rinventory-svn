@@ -169,6 +169,7 @@ class Customer{
 		
 		return "";
 	}
+	
 	/**
 	 * 
 	 * Enter description here ...
@@ -180,6 +181,43 @@ class Customer{
 		$sortSql = $sortField ? " ORDER BY $sortField $sortOrder" : "";
 		$sql = "SELECT id,name,address,phone,cell,email,active FROM ".TBL_CUSTOMER.$sortSql;
 		$array = array();
+		$res = $db->query($sql);
+		
+		if (!$res){
+			return $array;
+		}
+		
+		$row = $db->getRow($res);
+		
+		while($row){
+			$customer = new Customer();
+			$customer->id = $row['id'];
+			$customer->name = $row['name'];
+			$customer->address = $row['address'];
+			$customer->phone = $row['phone'];
+			$customer->cell = $row['cell'];
+			$customer->email = $row['email'];
+			$customer->active = $row['active'];
+			$array[] = $customer;
+			$row = $db->getRow($res);	
+		}
+		
+		$db->dispose($res);
+		
+		return $array;
+	}
+	
+/**
+	 * 
+	 * Enter description here ...
+	 * @param unknown_type $sortField
+	 * @param unknown_type $sortOrder
+	 */
+	public static function getAllActive($sortField, $sortOrder){
+		$db = Database::getInstance();
+		$sortSql = $sortField ? " ORDER BY $sortField $sortOrder" : "";
+		$sql = "SELECT id,name,address,phone,cell,email,active FROM ".TBL_CUSTOMER." WHERE active=1".$sortSql;
+		$array = array();echo $sql;
 		$res = $db->query($sql);
 		
 		if (!$res){

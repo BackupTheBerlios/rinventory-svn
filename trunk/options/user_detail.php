@@ -1,4 +1,7 @@
 <?php
+if (!Forms::checkPermission(FORM_USER_DETAIL))
+	return;
+	
 require 'inc/class.store.php'; 
 require 'inc/class.user.php';
 require_once 'inc/class.log.php';
@@ -60,7 +63,7 @@ else if($user->storeid)
 	</tr>
 	<tr>
 		<td class="label">Almacen:</td>
-		<td><?php echo $store->name ?></td>
+		<td><?php echo $store->name; ?></td>
 	</tr>
 	<tr>
 		<td class="label">E-Mail:</td>

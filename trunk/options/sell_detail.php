@@ -1,5 +1,8 @@
 <p class="form-title">Venta</p>
 <?php
+if (!Forms::checkPermission(FORM_SELL_DETAIL))
+	return;
+	
 require 'inc/class.sell.php';
 require 'inc/class.formatter.php';
 

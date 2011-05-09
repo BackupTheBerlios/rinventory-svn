@@ -1,5 +1,8 @@
 <p class="form-title">Datos de Usuario</p>
 <?php
+if (!Forms::checkPermission(FORM_USER_EDIT))
+	return;
+	
 require 'inc/class.store.php'; 
 require 'inc/class.user.php';
 require_once 'inc/class.log.php';
