@@ -1,5 +1,8 @@
 <p class="form-title">Registro de Venta</p>
 <?php
+if (!Forms::checkPermission(FORM_SELL_NEW))
+	return;
+	
 require_once 'inc/class.session.php';
 require_once 'inc/class.store.php';
 require_once 'inc/class.item.php';

@@ -1,10 +1,14 @@
+<p class="form-title">Ventas por Cobrar</p>
 <?php
+if (!Forms::checkPermission(FORM_SELL_OUTSTANDING))
+	return;
+	
 require 'inc/class.sell.php';
 require 'inc/class.formatter.php';
 
 $selles = Sell::getAllOutstanding("`date`", "DESC")
 ?>
-<p class="form-title">Ventas por Cobrar</p>
+
 <table class="default">
 <thead>
 	<tr>

@@ -1,9 +1,7 @@
 <p class="form-title">Informaci&oacute;n de Cliente</p>
 <?php
-if (!Forms::isAllowed(FORM_CUSTOMER_DETAIL)){
-	echo "Acceso Denegado";
+if (!Forms::checkPermission(FORM_CUSTOMER_DETAIL))
 	return;
-}
 
 require 'inc/class.customer.php';
 require_once 'inc/class.log.php';

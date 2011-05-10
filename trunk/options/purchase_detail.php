@@ -1,5 +1,8 @@
 <p class="form-title">Compra</p>
 <?php
+if (!Forms::checkPermission(FORM_PURCHASE_DETAIL))
+	return;
+
 require 'inc/class.purchase.php';
 require 'inc/class.formatter.php';
 

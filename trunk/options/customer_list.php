@@ -1,5 +1,8 @@
 <p class="form-title">Listado de Clientes</p>
 <?php
+if (!Forms::isAllowed(FORM_CUSTOMER_LIST))
+	return;
+	
 require 'inc/class.customer.php';
 require 'inc/class.formatter.php';
 

@@ -179,7 +179,7 @@ class Customer{
 	public static function getAll($sortField, $sortOrder){
 		$db = Database::getInstance();
 		$sortSql = $sortField ? " ORDER BY $sortField $sortOrder" : "";
-		$sql = "SELECT id,name,address,phone,cell,email,active FROM ".TBL_CUSTOMER.$sortSql;
+		$sql = "SELECT id,name,address,phone,cell,email,nit,active FROM ".TBL_CUSTOMER.$sortSql;
 		$array = array();
 		$res = $db->query($sql);
 		
@@ -197,6 +197,7 @@ class Customer{
 			$customer->phone = $row['phone'];
 			$customer->cell = $row['cell'];
 			$customer->email = $row['email'];
+			$customer->nit = $row['nit'];
 			$customer->active = $row['active'];
 			$array[] = $customer;
 			$row = $db->getRow($res);	

@@ -1,10 +1,13 @@
+<p class="form-title">Listado de Compras</p>
 <?php
+if (!Forms::checkPermission(FORM_PURCHASE_LIST))
+	return;
+	
 require 'inc/class.purchase.php';
 require 'inc/class.formatter.php';
 
 $purchases = Purchase::getAll("`date`","DESC");
 ?>
-<p class="form-title">Listado de Compras</p>
 <table class="default">
 <thead>
 	<tr>

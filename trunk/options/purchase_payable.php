@@ -1,10 +1,14 @@
+<p class="form-title">Compras por Pagar</p>
 <?php
+if (Forms::checkPermission(FORM_PURCHASE_PAYABLE))
+	return;
+
 require 'inc/class.purchase.php';
 require 'inc/class.formatter.php';
 
 $purchases = Purchase::getAllOutstanding("`date`", "DESC")
 ?>
-<p class="form-title">Compras por Pagar</p>
+
 <table class="default">
 <thead>
 	<tr>

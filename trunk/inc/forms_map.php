@@ -9,6 +9,12 @@ define('FORM_USER_EDIT', 'user_edit');
 define('FORM_USER_LIST', 'user_list');
 define('FORM_USER_DETAIL', 'user_detail');
 
+define('FORM_PURCHASE_NEW', 'purchase_new');
+define('FORM_PURCHASE_EDIT', 'purchase_edit');
+define('FORM_PURCHASE_DETAIL', 'purchase_detail');
+define('FORM_PURCHASE_LIST', 'purchase_list');
+define('FORM_PURCHASE_PAYABLE', 'purchase_payable');
+
 define('FORM_SELL_NEW', 'sell_new');
 define('FORM_SELL_EDIT', 'sell_edit');
 define('FORM_SELL_LIST', 'sell_list');

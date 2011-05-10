@@ -1,10 +1,14 @@
+<p class="form-title">Listado de Ventas</p>
 <?php
+if (!Forms::checkPermission(FORM_SELL_LIST))
+	return;
+	
 require 'inc/class.sell.php';
 require 'inc/class.formatter.php';
 
 $selles = Sell::getAll("`date`","DESC");
 ?>
-<p class="form-title">Listado de Ventas</p>
+
 <table class="default">
 <thead>
 	<tr>
