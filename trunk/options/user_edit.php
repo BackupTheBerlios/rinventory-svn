@@ -3,8 +3,8 @@
 if (!Forms::checkPermission(FORM_USER_EDIT))
 	return;
 	
-require 'inc/class.store.php'; 
-require 'inc/class.user.php';
+require_once 'inc/class.store.php'; 
+require_once 'inc/class.user.php';
 require_once 'inc/class.log.php';
 
 $userid = isset($_GET['user']) ? $_GET['user'] : "";
