@@ -24,4 +24,10 @@ $UNIT_TYPE = array(
 	UNIT_TYPE_BOX => 'Caja',
 	UNIT_TYPE_PACKAGE => 'Paquete',
 	UNIT_TYPE_UNIT => 'Unidad');
+$ROLE_LEVEL = array(
+	ADMIN_LEVEL => "Administrador",
+	CASH_LEVEL => "Caja",	
+	USER_LEVEL => "Normal",
+	SELLS_LEVEL => "Venta",
+	);
 ?>

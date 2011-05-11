@@ -93,6 +93,10 @@ class Forms{
 				return true;
 			case USER_LEVEL;
 				return Forms::isUserAllowed($form);
+			case CASH_LEVEL:
+				return Forms::isCashAllowed($form);
+			case SELLS_LEVEL:
+				return Forms::isSellsAllowed($form);
 		}
 		
 		return false;
@@ -105,15 +109,58 @@ class Forms{
 	 */
 	private static function isUserAllowed($form){
 		switch ($form) {
-			case FORM_CUSTOMER_NEW:
-			case FORM_CUSTOMER_EDIT:
-				return false;
 			case FORM_CUSTOMER_LIST:
 			case FORM_CUSTOMER_DETAIL:
+			case FORM_SELL_NEW:
+			case FORM_SELL_LIST:
+			case FORM_SELL_OUTSTANDING:
+			case FORM_SELL_DETAIL:
+			case FORM_SELL_EDIT:
+			case FORM_USER_LIST:
+			case FORM_USER_DETAIL:
+			case FORM_PURCHASE_NEW:
+			case FORM_PURCHASE_EDIT:
+			case FORM_PURCHASE_DETAIL:
+			case FORM_PURCHASE_LIST:
+			case FORM_PURCHASE_PAYABLE:
 				return true;
 		}
 		
 		return false;	
+	}
+	
+	/**
+	 * 
+	 * Enter description here ...
+	 * @param unknown_type $form
+	 */
+	private static function isCashAllowed($form){
+		switch ($form) {
+			case FORM_SELL_LIST:
+			case FORM_SELL_OUTSTANDING:
+			case FORM_SELL_DETAIL:
+			case FORM_SELL_EDIT:
+				return true;
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * 
+	 * Enter description here ...
+	 * @param unknown_type $form
+	 */
+	private static function isSellsAllowed($form){
+		switch ($form) {
+			case FORM_SELL_NEW:
+			case FORM_SELL_LIST:
+			case FORM_SELL_OUTSTANDING:
+			case FORM_SELL_DETAIL:
+				return true;
+		}
+		
+		return false;
 	}
 }
 ?>

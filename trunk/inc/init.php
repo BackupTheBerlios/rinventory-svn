@@ -66,6 +66,8 @@ define("COOKIE_PATH", "/");  //Avaible in whole domain
 define("ADMIN_NAME", "admin");
 define("GUEST_NAME", "Guest");
 define("ADMIN_LEVEL", 9);
+define("SELLS_LEVEL", 3);
+define("CASH_LEVEL", 2);
 define("USER_LEVEL",  1);
 define("GUEST_LEVEL", 0);
 

@@ -1,4 +1,4 @@
-<p class="form-title">Registro de nueva compra</p><?phpif (Forms::checkPermission(FORM_PURCHASE_NEW))	return;include 'inc/widget/error.php'; ?><form method="POST" name="form1" action="">	<input type="hidden" value="<?php echo FORM_PURCHASE_NEW;?>" name="page"/> 	<table class="form">	<tr>
+<p class="form-title">Registro de nueva compra</p><?php if (!Forms::checkPermission(FORM_PURCHASE_NEW))	return;include 'inc/widget/error.php'; ?><form method="POST" name="form1" action="">	<input type="hidden" value="<?php echo FORM_PURCHASE_NEW;?>" name="page"/> 	<table class="form">	<tr>
 		<td class="label">C&oacute;digo:</td>
 		<td><input type="text" size="16" name="code" /> <span class="mandatory">*</span></td>
 	</tr>

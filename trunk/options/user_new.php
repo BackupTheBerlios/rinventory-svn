@@ -58,9 +58,12 @@ include 'inc/widget/error.php';
 		<td class="label">Rol de Usuario:</td>
 		<td>
 			<select name="role">
-			<option value=""></option>
-			<option value="<?php echo USER_LEVEL;?>" <?php echo $role == USER_LEVEL ? "selected=\"selected\"" : "";?>>Normal</option>
-			<option value="<?php echo ADMIN_LEVEL;?>" <?php echo $role == ADMIN_LEVEL ? "selected=\"selected\"" : "";?>>Administrador</option>
+			<option value="">-Seleccione-</option>
+			<?php
+			foreach($ROLE_LEVEL as $key => $value){
+				echo "<option value='$key'".($role == $key ? " selected='selected'" : "").">$value</option>";
+			} 
+			?>
 			</select>
 		</td>
 	</tr>                  

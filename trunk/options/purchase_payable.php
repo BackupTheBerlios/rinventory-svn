@@ -1,6 +1,6 @@
 <p class="form-title">Compras por Pagar</p>
 <?php
-if (Forms::checkPermission(FORM_PURCHASE_PAYABLE))
+if (!Forms::checkPermission(FORM_PURCHASE_PAYABLE))
 	return;
 
 require 'inc/class.purchase.php';

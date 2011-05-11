@@ -55,9 +55,12 @@ if (isset($_POST['page']) && isset($_POST['user']) && !$log->isError())
 		<td class="label">Rol de Usuario:</td>
 		<td>
 			<select name="role">
-			<option value=""></option>
-			<option value="<?php echo USER_LEVEL;?>" <?php echo $user->level == USER_LEVEL ? "selected=\"selected\"" : "";?>>Normal</option>
-			<option value="<?php echo ADMIN_LEVEL;?>" <?php echo $user->level == ADMIN_LEVEL ? "selected=\"selected\"" : "";?>>Administrador</option>
+			<option value="">-Seleccione-</option>
+			<?php 
+			foreach($ROLE_LEVEL as $key => $value){
+				echo "<option value='$key'".($user->level == $key ? " selected='selected'" : "").">$value</option>";
+			} 
+			?>
 			</select>
 		</td>
 	</tr>                  

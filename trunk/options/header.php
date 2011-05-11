@@ -28,15 +28,21 @@ echo '<div id="doc3" class="yui-t7">';
 ?>
 <div id="hd">
 	<div id="header">
-		<div>&nbsp;<img src="img/sweb/logo.png"/></div>
+		<div>&nbsp;<img src="img/sweb/logo.png"/> &nbsp;Bienvenido: <?php echo $session->userinfo['firstname']. " ".$session->userinfo['lastname'];?></div>
 		<div id="nav_bar">
 			<ul id="menu_bar" class="sf-menu">
 				<li><a href="index.php">Inicio</a></li>
 				<li><a href="#">Compras</a>
 					<ul>
-						<li><a href="index.php?pages=purchase_new">Nuevo</a></li>
-						<li><a href="index.php?pages=purchase_list">Listado</a></li>
-						<li><a href="index.php?pages=purchase_payable">Por Pagar</a></li>
+						<?php if (Forms::isAllowed(FORM_PURCHASE_NEW)){ ?>
+						<li><a href="<?php echo Forms::getLink(FORM_PURCHASE_NEW)?>">Nuevo</a></li>
+						<?php } ?>
+						<?php if (Forms::isAllowed(FORM_PURCHASE_LIST)){ ?>
+						<li><a href="<?php echo Forms::getLink(FORM_PURCHASE_LIST)?>">Listado</a></li>
+						<?php } ?>
+						<?php if (Forms::isAllowed(FORM_PURCHASE_PAYABLE)){ ?>
+						<li><a href="<?php echo Forms::getLink(FORM_PURCHASE_PAYABLE)?>">Por Pagar</a></li>
+						<?php } ?>
 					</ul>
 				</li>
 				<li><a href="#">Inventario</a>

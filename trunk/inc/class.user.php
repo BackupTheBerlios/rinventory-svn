@@ -69,7 +69,9 @@ class User{
 		$db = Database::getInstance();
 
 		$this->setupSafeText($db);
-		
+		if (!$storeid)
+			$storeid = "NULL";
+			
 		$sql = "INSERT INTO ". TBL_USER ." ".
 			"(name,ape,".
 			"address,username,".
