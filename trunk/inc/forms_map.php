@@ -1,4 +1,6 @@
 <?php
+define('FORM_ITEM_LIST', 'inventario_list');
+
 define('FORM_CUSTOMER_NEW', 'customer_new');
 define('FORM_CUSTOMER_EDIT', 'customer_edit');
 define('FORM_CUSTOMER_DETAIL', 'customer_detail');

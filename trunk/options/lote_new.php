@@ -12,7 +12,7 @@ $db = Database::getInstance();
 <?php
 if (isset($_GET['itemid'])){
 	$res = $db->query("SELECT link_type_item as name,v_descr FROM ".TBL_ITEM." WHERE id={$_GET['itemid']}");
-	$row = $db->getRow($res, 0);
+	$row = $db->getRow($res);
 	echo "<input type='hidden' name='items' value='{$_GET['itemid']}'/><span>{$row['name']}, {$row['v_descr']}</span>";
 }
 else{
@@ -22,7 +22,7 @@ else{
 <?php
 	$res = $db->query("SELECT id,link_type_item as name,v_descr FROM ".TBL_ITEM);
 
-	while($row = $db->getRow($res,0)) 
+	while($row = $db->getRow($res)) 
 ?>
 			<option value="<?php echo $row['id'];?>"> <?php echo $row['name'].', '.$row['v_descr']; ?></option>
 <?php  	
@@ -55,7 +55,7 @@ else{
 <?php
 $res = $db->query("SELECT id,name FROM ".TBL_DEPARTMENT);
 
-while($row = $db->getRow($res,0)) {
+while($row = $db->getRow($res)) {
 ?> 
 			<option value="<?php echo $row['id'];?>"> <?php echo $row['name']; ?></option>
 <?php

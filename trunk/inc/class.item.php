@@ -5,6 +5,14 @@ class Item{
 	public $id;
 	public $name;
 	public $type;
+	public $material;
+	public $priceUnit;
+	public $pricePack;
+	public $priceBox;
+	public $stock;
+	public $stockMin;
+	public $trademark;
+	public $image;
 	
 	public static function getAll($sortOrder, $sortField){
 		$db = Database::getInstance();
@@ -28,15 +36,22 @@ class Item{
 		return $array;
 	}
 	
-	public static function getAllFromStore($storeid){
+	/**
+	 * 
+	 * Enter description here ...
+	 * @param unknown_type $storeid
+	 * @param unknown_type $sortField
+	 * @param unknown_type $sortOrder
+	 */
+	public static function getAllFromStore($storeid, $sortField, $sortOrder){
 		$db = Database::getInstance();
+		$sortSql = ($sortField ? "ORDER BY $sortField $sortOrder" : "");
 		$result = array();
-		$sql = "SELECT l.itemid, l.id lotid,sum(l.stock) stock ".
-			"FROM ".TBL_LOT." l WHERE l.active=1 AND l.idalmacen=$storeid GROUP BY l.itemid, l.id HAVING stock>0";
+		$sql = "SELECT l.itemid, sum(l.stock) stock ".
+			"FROM ".TBL_LOT." l WHERE l.active=1 AND l.idalmacen=$storeid GROUP BY l.itemid";
 		
-		$sql = "SELECT i.id,i.v_descr name,i.link_type_item type,i.material,i.price_unit,i.price_paq price_pack,i.price_box,il.lotid,il.stock,ll.unidades units_box ".
-			"FROM ".TBL_ITEM." i INNER JOIN ($sql) il ON i.id=il.itemid ".
-			"INNER JOIN ".TBL_LOT." ll ON il.lotid=ll.id";
+		$sql = "SELECT i.id,i.v_descr name,i.link_type_item type,i.material,i.price_unit,i.price_paq price_pack,i.price_box,il.stock,i.stock_min,i.link_marca trademark,i.image ".
+			"FROM ".TBL_ITEM." i LEFT JOIN ($sql) il ON i.id=il.itemid $sortSql";
 				
 		$res = $db->query($sql);
 
@@ -46,7 +61,19 @@ class Item{
 		$row = $db->getRow($res);
 		
 		while($row){
-			$result[] = $row;	
+			$item = new Item();
+			$item->id = $row['id'];
+			$item->name = $row['name'];
+			$item->type = $row['type'];
+			$item->material = $row['material'];
+			$item->priceUnit = $row['price_unit'];
+			$item->pricePack = $row['price_pack'];
+			$item->priceBox = $row['price_box'];
+			$item->stockMin = $row['stock_min'];
+			$item->stock = $row['stock'];
+			$item->trademark = $row['trademark'];
+			$item->image = $row['image']; 
+			$result[] = $item;	
 			$row = $db->getRow($res);
 		}
 		
@@ -54,6 +81,8 @@ class Item{
 		
 		return $result;
 	}
+	
+	/**/
 	
 	public static function getFromLot($lotid){
 		$db = Database::getInstance();

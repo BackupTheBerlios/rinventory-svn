@@ -5,13 +5,13 @@ if (!Forms::checkPermission(FORM_SELL_NEW))
 	
 require_once 'inc/class.session.php';
 require_once 'inc/class.store.php';
-require_once 'inc/class.item.php';
+require_once 'inc/class.lot.php';
 require_once 'inc/class.customer.php';
 
 $session = Session::getInstance();
 $stores = Store::getAllActive("name", "ASC");
 $storeid = isset($_GET['store']) ? $_GET['store'] : ""; 
-$items = is_numeric($storeid) ? Item::getAllFromStore($storeid) : array();
+$lots = is_numeric($storeid) ? Lot::getAllFromStore($storeid) : array();
 
 include 'inc/widget/error.php'; 
 ?>
@@ -118,7 +118,7 @@ include 'inc/widget/error.php';
 	<br />
 	<button id="save">Guardar</button>
 </form>
-<input type="hidden" value="<?php echo htmlentities(json_encode($items));?>" id="items_data"/>
+<input type="hidden" value="<?php echo htmlentities(json_encode($lots));?>" id="items_data"/>
 
 <div id="dialog">
 <p>Usted esta a punto de registrar una venta, esta operaci&oacute;n es irreversible.</p>
