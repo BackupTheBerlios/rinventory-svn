@@ -1,5 +1,6 @@
 <?php
 require_once 'inc/class.mysqli.php';
+require_once 'inc/class.log.php';
 
 class Item{
 	public $id;
@@ -13,6 +14,46 @@ class Item{
 	public $stockMin;
 	public $trademark;
 	public $image;
+	
+	/**
+	 * 
+	 * Enter description here ...
+	 * @param unknown_type $itemid
+	 */
+	public function read($itemid){
+		$db = Database::getInstance();
+		$log = Log::getInstance();
+		$sql = "SELECT link_type_item type,".
+			"v_descr name,material,".
+			"price_unit,price_paq price_pack,price_box,".
+			"stock_min,link_marca trademark,image ".
+			"FROM ".TBL_ITEM." WHERE id=$itemid";
+		$res = $db->query($sql);
+		
+		if (!$res){
+			$log->addError("No se puedo obtener datos de Producto.");
+			return false;
+		}
+		
+		if ($db->rows($res) != 1){
+			$log->addError("No se encontraron datos de Producto solicitado.");
+			$db->dispose($res);
+			return false;
+		}
+		
+		$row = $db->getRow($res);
+		$this->id = $itemid;
+		$this->name = $row['name'];
+		$this->type = $row['type'];
+		$this->stockMin = $row['stock_min'];
+		$this->trademark = $row['trademark'];
+		$this->priceUnit = $row['price_unit'];
+		$this->priceBox = $row['price_box'];
+		$this->pricePack = $row['price_pack'];
+		$this->material = $row['material'];
+		
+		return true;
+	}
 	
 	public static function getAll($sortOrder, $sortField){
 		$db = Database::getInstance();

@@ -1,6 +1,6 @@
 <?php
-include_once 'inc/class.mysqli.php';
-include_once 'inc/class.log.php';
+require_once 'inc/class.mysqli.php';
+require_once 'inc/class.log.php';
 
 class Customer{
 	public $id;
