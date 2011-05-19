@@ -43,19 +43,19 @@ include 'inc/widget/error.php';
 	</tr>
 	<tr>
 		<td class="label">Cajas:</td>
-		<td><input name="box" type="text" onchange="multiplicar()" id="box" value="" size="20"> <span class="mandatory">*</span> </td>
+		<td><input name="box" type="text" onchange="multiplicar()" id="box" value="" size="20"/> <span class="mandatory">*</span> </td>
 	</tr>
 	<tr>
 		<td class="label">Unidades:</td>
-		<td><input name="units" type="text" onchange="multiplicar()" id="units" value=""  size="20"> <span class="mandatory">*</span> </td>
+		<td><input name="units" type="text" onchange="multiplicar()" id="units" value=""  size="20"/> <span class="mandatory">*</span> </td>
 	</tr>
 	<tr>
 		<td class="label">Stock:</td>
-		<td><input name="stock" type="text" readonly="readonly" id="stock" value="0" size="20"></td>
+		<td><input name="stock" type="text" readonly="readonly" id="stock" value="0" size="20"/></td>
 	</tr>
 	<tr>
 		<td class="label">Activo:</td>
-		<td><input name="active" type="checkbox" id="active" value="1"></td>
+		<td><input name="active" type="checkbox" id="active" value="1"/></td>
 	</tr>
 	<tr>
 		<td class="label">Almacen</td>

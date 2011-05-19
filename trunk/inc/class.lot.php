@@ -2,6 +2,12 @@
 require_once 'inc/class.mysqli.php';
 
 class Lot{
+	public $id;
+	public $boxes;
+	public $units;
+	public $active;
+	public $stock;
+	
 	public static function getAllFromStore($storeid){
 		$db = Database::getInstance();
 		$result = array();
