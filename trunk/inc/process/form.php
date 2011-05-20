@@ -13,11 +13,11 @@ function process_form(){
 			require 'inc/process/customer.php';
 			customer_edit();
 			break;
-		case "purchase_new":
+		case FORM_PURCHASE_NEW:
 			require 'inc/process/purchase.php';
 			purchase_add();
 			break;
-		case "purchase_edit":
+		case FORM_PURCHASE_EDIT:
 			require 'inc/process/purchase.php';
 			purchase_edit();
 			break;
@@ -40,6 +40,10 @@ function process_form(){
 		case "user_edit":
 			require 'inc/process/user.php';
 			user_edit();
+			break;
+		case FORM_LOT_NEW:
+			require 'inc/process/lot.php';
+			lot_add();
 			break;
 		default:
 			$processed = false;

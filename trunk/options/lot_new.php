@@ -19,18 +19,18 @@ if ($storeid)
 include 'inc/widget/error.php';
 ?>
 
-<form action="index.php?pages=lote" method="post" name="adminForm">
+<form action="" method="post">
 	<table class="form">
 	<tr>
 		<td class="label">Nombre:</td>
 		<td>
 			<?php
 			if ($itemid)
-				echo "<input type='hidden' name='items' value='$itemid'/><span>$item->name, $item->type</span>";
+				echo "<input type='hidden' name='itemid' value='$itemid'/><span>$item->name, $item->type</span>";
 			else {
 				$items = Item::getAll("name", "");
 				
-				echo "<select name='items' id='items'>";
+				echo "<select name='itemid' id='items'>";
 				echo "<option value=''>-Seleccione-</option>";
 				
 				foreach ($items as $item){
@@ -62,11 +62,11 @@ include 'inc/widget/error.php';
 		<td>
 			<?php
 			if ($storeid)
-				echo "<input type='hidden' name='almacen' value='$storeid'/>$store->name";
+				echo "<input type='hidden' name='storeid' value='$storeid'/>$store->name";
 			else{
 				$stores = Store::getAllActive("name");
 				
-				echo "<select name='almacen'>";
+				echo "<select name='storeid'>";
 				echo "<option value=''>-Seleccione-</option>";
 				
 				foreach ($stores as $store){
@@ -108,13 +108,14 @@ include 'inc/widget/error.php';
 	</tr>
 	<tr>
 		<td class="label">Precio Final:</td>
-		<td colspan="2"><input style="background-color:#DFDFDF" name="pricef" type="text" readonly="readonly" id="pricef" value="" size="20">  ( Precio final de compra) </td>
+		<td colspan="2"><input style="background-color:#DFDFDF" name="pricef" type="text" readonly="readonly" id="pricef" value="0" size="20">  ( Precio final de compra) </td>
 	</tr>
 	<tr>
 		<td class="label">Observaciones:</td>
 		<td><textarea name="notes" cols="45" rows="7" id="Description"></textarea></td>
 	</tr>
 	</table>
+	<input type="hidden" name="page" value="<?php echo FORM_LOT_NEW;?>"/>
 	<br />
 	<button id="save">Guardar</button>
 </form>

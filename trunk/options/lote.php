@@ -28,4 +28,8 @@ if (isset($_POST['hw']))
 else 
 	$res = $db->query("INSERT INTO ".TBL_LOT." VALUES('','$name','$box','$units','$stock','$active','$almc','$costo',NOW(),'admin','',NOW(),'$tmar','$tter','$aduana','$tbank','$cade','$other','$pricef','$notes')");
 ?>
+
 <p class="form-title">Registro Aceptado Correctamente</p>
+<?php 
+echo "INSERT INTO ".TBL_LOT." VALUES('','$name','$box','$units','$stock','$active','$almc','$costo',NOW(),'admin','',NOW(),'$tmar','$tter','$aduana','$tbank','$cade','$other','$pricef','$notes')";
+?>

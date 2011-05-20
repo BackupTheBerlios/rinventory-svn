@@ -1,34 +1,42 @@
+<p class="form-title">Registro de Nuevo Lote</p>
 <?php
 require_once 'inc/class.mysqli.php';
+require_once 'inc/class.item.php';
+require_once 'inc/class.store.php';
 
 $db = Database::getInstance(); 
+$itemid = isset($_GET['item']) && is_numeric($_GET['item'])? $_GET['item'] : "";
+$storeid = isset($_GET['store']) && is_numeric($_GET['store']) ? $_GET['store'] : "";
+
+$item = new Item();
+$store = new Store();
+
+if ($itemid)
+	$item->read($itemid);
+
+if ($storeid)
+	$store->read($storeid);
 ?>
-<p class="form-title">Registro de Nuevo Lote</p>
 <form action="index.php?pages=lote" method="post" name="adminForm" enctype="multipart/form-data">
 	<table class="form">
 	<tr>
 		<td class="label">Nombre:</td>
 		<td>
 <?php
-if (isset($_GET['itemid'])){
-	$res = $db->query("SELECT link_type_item as name,v_descr FROM ".TBL_ITEM." WHERE id={$_GET['itemid']}");
-	$row = $db->getRow($res);
-	echo "<input type='hidden' name='items' value='{$_GET['itemid']}'/><span>{$row['name']}, {$row['v_descr']}</span>";
-}
-else{
-?>
-			<select name="items" id="items">
-			<option value=""></option>
-<?php
-	$res = $db->query("SELECT id,link_type_item as name,v_descr FROM ".TBL_ITEM);
-
-	while($row = $db->getRow($res)) 
-?>
-			<option value="<?php echo $row['id'];?>"> <?php echo $row['name'].', '.$row['v_descr']; ?></option>
-<?php  	
-}
-?>
-			</select>
+			if ($itemid)
+				echo "<input type='hidden' name='items' value='$itemid'/><span>$item->name, $item->type</span>";
+			else {
+				$items = Item::getAll("name", "");
+				
+				echo "<select name='items' id='items'>";
+				echo "<option value=''>-Seleccione-</option>";
+				
+				foreach ($items as $item){
+					echo "<option value='$item->id'>$item->name, $item->type</option>";
+				}
+				echo "</select>";
+			}
+			?>
 		</td>
 	</tr>
 	<tr>
@@ -50,18 +58,22 @@ else{
 	<tr>
 		<td class="label">Almacen</td>
 		<td>
-			<select name="almacen" id="almacen">
-			<option value=""></option>
-<?php
-$res = $db->query("SELECT id,name FROM ".TBL_DEPARTMENT);
-
-while($row = $db->getRow($res)) {
-?> 
-			<option value="<?php echo $row['id'];?>"> <?php echo $row['name']; ?></option>
-<?php
-}
-?>
-			</select>
+			<?php
+			if ($storeid)
+				echo "<input type='hidden' name='almacen' value='$storeid'/>$store->name";
+			else{
+				$stores = Store::getAllActive("name");
+				
+				echo "<select name='almacen'>";
+				echo "<option value=''>-Seleccione-</option>";
+				
+				foreach ($stores as $store){
+					echo "<option value='$store->id'>$store->name</option>";
+				}
+				
+				echo "</select>";
+			}
+			?>
 		</td>
 	</tr>
 	<tr>
