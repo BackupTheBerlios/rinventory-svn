@@ -12,6 +12,8 @@ define('ERROR_TITLE', '&iexcl;ERROR...!');
 define('ALERT_TITLE', 'Atenci&oacute;n');
 define('SB_BREADCRUMB', '&raquo;');
 define('SB_CURRENCY', 'Bs. ');
+define('ERROR_BD_QUERY', 'Error BD-001.');
+
 $PURCHASE_STATUS = array(
 	PURCHASE_STATUS_PENDING => 'Pendiente',
 	PURCHASE_STATUS_INTRANSIT => 'En Transito', 

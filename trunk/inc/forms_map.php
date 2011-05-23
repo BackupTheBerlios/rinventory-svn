@@ -1,7 +1,10 @@
 <?php
 define('FORM_ITEM_LIST', 'inventario_list');
+
 define('FORM_LOT_NEW', 'lot_new');
 define('FORM_LOT_DETAIL', 'lot_detail');
+define('FORM_LOT_EDIT', 'lot_edit');
+define('FORM_LOT_LIST', 'lot_list');
 
 define('FORM_CUSTOMER_NEW', 'customer_new');
 define('FORM_CUSTOMER_EDIT', 'customer_edit');

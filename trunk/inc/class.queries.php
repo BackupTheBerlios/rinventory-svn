@@ -1,5 +1,6 @@
 <?php
 require_once 'inc/class.mysqli.php';
+require_once 'inc/class.log.php';
 
 class Queries{
 
@@ -18,12 +19,50 @@ class Queries{
 			return $array;
 		
 		$row = $db->getRow($res);
+		
 		while($row){
 			$array[] = $row;
 			$row = $db->getRow($res);
 		}
 		
 		return $array;
+	}
+	
+	/**
+	 * 
+	 * Enter description here ...
+	 * @param unknown_type $itemid
+	 * @param unknown_type $storeid
+	 */
+	public static function getLotsFromItem($itemid, $storeid){
+		$db = Database::getInstance();
+		$result = array();
+		$sql = "SELECT l.id,".
+			"s.name store,".
+			"l.stock,".
+			"l.active,".
+			"l.price_final price ".
+			"FROM ".TBL_LOT." l INNER JOIN ".TBL_DEPARTMENT." s ON s.id=l.idalmacen ".
+			"WHERE l.itemid=$itemid AND l.stock>0 ".($storeid ? "AND s.id=$storeid" : "");
+				
+		$res = $db->query($sql);
+
+		if (!$res){
+			$log = Log::getInstance();
+			$log->addError(ERROR_BD_QUERY." No se pudo obtener datos de Lotes.");
+			return $result;
+		}
+		
+		$row = $db->getRow($res);
+		
+		while($row){
+			$result[] = $row;	
+			$row = $db->getRow($res);
+		}
+		
+		$db->dispose($res);
+		
+		return $result;
 	}
 }
 ?>
