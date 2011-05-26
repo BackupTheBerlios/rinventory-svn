@@ -1,5 +1,8 @@
 <p class="form-title">Registro de Nuevo Lote</p>
 <?php
+if (!Forms::checkPermission(FORM_LOT_NEW))
+	return;
+	
 require_once 'inc/class.item.php';
 require_once 'inc/class.store.php';
 

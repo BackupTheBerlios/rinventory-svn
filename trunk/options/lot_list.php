@@ -43,6 +43,7 @@ include 'inc/widget/error.php';
 	<th>Stock</th>
 	<th>Precio Final</th>
 	<th>Estado</th>
+	<th colspan="2">&nbsp;</th>
 </tr>
 </thead>
 <tbody>
@@ -55,8 +56,8 @@ foreach($lots as $lot){
 	<td class="number"><?php echo $lot['stock'];?></td>
 	<td class="number"><?php echo $lot['price'];?></td>
 	<td style="padding-left:1em"><?php echo $lot['active'] == 1 ? ACTIVE_ON : ACTIVE_OFF;?></td>
-	<td class="ui-state-default"><a href="<?php echo Forms::getLink(FORM_LOT_DETAIL, array("lot"=>$lot['id']));?>"><?php echo ICON_ZOOMIN;?></a></td>
-	<td class="ui-state-default"><a href="<?php echo Forms::getLink(FORM_LOT_DETAIL, array("lot"=>$lot['id']));?>"><?php echo ICON_PENCIL;?></a></td>
+	<td class="ui-state-default"><a href="<?php echo Forms::getLink(FORM_LOT_DETAIL, array("lot"=>$lot['id']));?>" title="Ver"><?php echo ICON_ZOOMIN;?></a></td>
+	<td class="ui-state-default"><a href="<?php echo Forms::getLink(FORM_LOT_EDIT, array("lot"=>$lot['id']));?>" title="Editar"><?php echo ICON_PENCIL;?></a></td>
 </tr>
 <?php 
 } 
@@ -81,7 +82,7 @@ while ($row = $db->getRow($res, 0)){
 	<td>&nbsp;</td>
 	<td style="text-align:right">Stock Total:</td>
 	<td class="total number"><?php echo $stockTotal;?></td>
-	<td>&nbsp;</td>
+	<td colspan="4">&nbsp;</td>
 </tr>
 </tfoot>  	  
 </table>

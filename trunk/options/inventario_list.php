@@ -54,6 +54,7 @@ $stores = Store::getAllActive("");
 		<tr>
 			<?php
 			$urlLotNew = Forms::getLink(FORM_LOT_NEW, array("item" => $item->id, "store" => $store->id));
+			$urlLotList = Forms::getLink(FORM_LOT_LIST, array("item" => $item->id, "store" => $store->id));
 			?>
 			<td><a href="index.php?pages=modify&item=<?php echo $titem;?>&id=<?php echo $item->id;?>"><?php echo $item->name;?></a></td>
 			<td><?php echo $item->type;?></td>
@@ -62,7 +63,7 @@ $stores = Store::getAllActive("");
 			<td class="number"><?php echo Formatter::number($item->priceUnit);?></td>
 			<td class="number"><?php echo Formatter::number($item->pricePack);?></td>
 			<td class="number"><?php echo Formatter::number($item->priceBox);?></td>
-			<td class="date"><a href="index.php?pages=lote_list&itemid=<?php echo $item->id;?>">Ver Lotes</a><br/><a href="<?php echo $urlLotNew;?>">Nuevo Lote</a></td>    
+			<td class="date"><a href="<?php echo $urlLotList;?>">Ver Lotes</a><br/><a href="<?php echo $urlLotNew;?>">Nuevo Lote</a></td>    
 			<td class="date"><img src="<?php echo $item->image;?>" height="50"/></td>
 		</tr>
 		<?php } ?>

@@ -1,5 +1,8 @@
 <p class="form-title">Detalle de Lote</p>
 <?php
+if (!Forms::checkPermission(FORM_LOT_DETAIL))
+	return;
+	
 require_once 'inc/class.item.php';
 require_once 'inc/class.store.php';
 require_once 'inc/class.lot.php';
