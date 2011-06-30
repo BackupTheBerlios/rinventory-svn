@@ -5,6 +5,10 @@ function process_form(){
 	$processed = true;
 	
 	switch ($page){
+		case FORM_LOGIN:
+			require 'inc/process/login.php';
+			sign_in();
+			break;
 		case FORM_CUSTOMER_NEW:
 			require 'inc/process/customer.php';
 			customer_add();

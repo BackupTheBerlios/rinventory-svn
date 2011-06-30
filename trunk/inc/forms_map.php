@@ -1,4 +1,5 @@
 <?php
+define('FORM_LOGIN', 'login');
 define('FORM_ITEM_LIST', 'inventario_list');
 
 define('FORM_LOT_NEW', 'lot_new');

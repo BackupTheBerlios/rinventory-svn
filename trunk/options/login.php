@@ -6,6 +6,7 @@
 <title>Sistema de Inventarios </title>
 <link rel="stylesheet" type="text/css" href="css/reset-fonts-grids.css"/>
 <link rel="stylesheet" type="text/css" href="css/admin_login.css" media="screen" />
+<link rel="stylesheet" type="text/css" href="css/ui-lightness/jquery-ui-1.8.11.custom.css"/>
 <script type="text/javascript" src="js/cms.javascript.js"></script>
 </head>
 <body>
@@ -15,17 +16,11 @@
 		<div class="yui-g">
 			<div id="mainwrapper">
 			
-<?php 
-if($form->num_errors > 0){
-   echo "<font size=\"2\" color=\"#ff0000\">".$form->num_errors." error(s) found</font>";
-}
-
-?>
 
 <div id="ctr" align="center">
   <div class="login">
     <div class="login-form"> <img src="img/sweb/login.gif" alt="Acceder" width="174" height="33"/>
-      <form action="process_login.php" method="post" name="login" id="login">
+      <form action="" method="post" name="login" id="login">
         <div class="form-block">
           <div class="inputlabel">Nombre de Usuario</div>
           <div>
@@ -37,21 +32,20 @@ if($form->num_errors > 0){
           </div>
 		  <div align="left">
             <input name="submit" class="button" value="Entrar" type="submit"/>
-          &nbsp;&nbsp; Ingresar como <a href="index.php?option=home"><span style="color:#0033CC">invitado</span></a></div>
+          </div>
         </div>
-        <input type="hidden" name="challenge" value="&lt;?php print $challenge ?&gt;"/>
-        <input type="hidden" name="response" value=""/>
         <input name="user" type="hidden" id="user" value=""/>
 		<input type="hidden" id="pwd" name="pwd" value=""/>
-		<input type="hidden" name="sub_login" value="1"/>
+		<input type="hidden" name="page" value="<?php echo FORM_LOGIN;?>"/>
       </form>
     </div>
     <div class="login-text">
       <div class="ctr"><img src="img/sweb/security.png" alt="seguridad" height="64" width="200"/></div>
       <p>Bienvenido</p>
-      <p>Tienes que usar un Nombre de usuario y Contrase&ntilde;a validos para acceder al sistema de inventarios x</p>
+      <p>Tienes que usar un Nombre de usuario y Contrase&ntilde;a validos para acceder al sistema de inventarios</p>
     </div>
     <div class="clr"></div>
+    <div style="margin:0.5em"><?php include 'inc/widget/error.php';?></div>
   </div>
 </div>
 

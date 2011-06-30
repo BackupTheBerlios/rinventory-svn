@@ -5,6 +5,6 @@
 	else
 		include 'options/home.php';			include 'options/footer.php';
 }		   
-else	 
-	include 'options/login.php';$db->close();
+else if (isset($_POST['page'])){	require 'inc/process/form.php';	process_form();	include 'options/login.php';} 
+else{	include 'options/login.php';}$db->close();
 ?>

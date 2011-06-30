@@ -1,6 +1,7 @@
 <?
 require_once 'inc/class.login.php';
 require_once 'inc/class.form.php';
+require_once 'inc/class.log.php';
 
 class Session {
 	private static $_instance;
@@ -128,7 +129,7 @@ class Session {
     * Effectively logging in the user if all goes well.
     */
    function login($subuser, $subpass, $subremember){
-      global $form;  //The database and form object
+		$log = Log::getInstance();
 		
       $login = Login::getInstance();
       
@@ -136,23 +137,23 @@ class Session {
       $field = "user";  //Use field name for username
       
       if(!$subuser || strlen($subuser = trim($subuser)) == 0){
-         $form->setError($field, "* Username not entered");
+      	$log->addError("Debe ingresar Nombre de Usuario");
       }
       else{
          /* Check if username is not alphanumeric */
          if(!eregi("^([0-9a-z])*$", $subuser)){
-            $form->setError($field, "* Username not alphanumeric");
+         	$log->addError("Nombre de Usuario debe ser alfanum&eacute;rico");
          }
       }
 
       /* Password error checking */
       $field = "pass";  //Use field name for password
       if(!$subpass){
-         $form->setError($field, "* Password not entered");
+      	$log->addError("Debe ingresar Contrase&ntilde;a");
       }
       
       /* Return if form errors exist */
-      if($form->num_errors > 0){
+      if($log->isError()){
          return false;
       }
 
@@ -163,15 +164,15 @@ class Session {
       /* Check error codes */
       if($result == 1){
          $field = "user";
-         $form->setError($field, "* Username not found");
+         $log->addError("No existe Nombre de Usuario que ingres&oacute;");
       }
       else if($result == 2){
          $field = "pass";
-         $form->setError($field, "* Invalid password");
+         $log->addError("Contrase&ntilde;a no es v&aacute;lida");
       }
       
       /* Return if form errors exist */
-      if($form->num_errors > 0){
+      if($log->isError()){
          return false;
       }
 
